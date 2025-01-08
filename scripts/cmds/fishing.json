@@ -1,0 +1,16 @@
+{
+  "100078140834638": {
+    "fishes": [],
+    "totalEarnings": 0
+  },
+  "61566533590967": {
+    "fishes": [
+      {
+        "type": 2,
+        "name": "Tuna",
+        "price": 500
+      }
+    ],
+    "totalEarnings": 0
+  }
+}
