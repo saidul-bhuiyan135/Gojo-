@@ -44,6 +44,7 @@
 		"ora": "^5.4.1",
 		"passport": "^0.6.0",
 		"passport-local": "^1.0.0",
+		"pastebin-js": "^1.0.6",
 		"path": "^0.12.7",
 		"qrcode-reader": "^1.0.4",
 		"qs": "^6.11.0",
