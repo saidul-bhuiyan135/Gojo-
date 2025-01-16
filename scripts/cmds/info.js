@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
 config: {
-  name: "info",
+  name: "info2",
   aurthor:"MR.AYAN",// Convert By Goatbot MR.AYAN 
    role: 0,
   shortDescription: " ",
@@ -24,7 +24,7 @@ config: {
       nick: 'ABIR'
     };
 
-    const bold = '⁦https://imgur.com/a/kMvfcNr⁩'; // Replace with your Google Drive videoid link ⁦https://drive.google.com/uc?export=download&id=here⁩ put your video id
+    const bold = 'https://i.imgur.com/y0SQdL8.mp4'; // Replace with your Google Drive videoid link ⁦https://drive.google.com/uc?export=download&id=here⁩ put your video id
 
     const tmpFolderPath = path.join(__dirname, 'tmp');
 
