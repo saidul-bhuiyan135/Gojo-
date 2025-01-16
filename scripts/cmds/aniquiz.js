@@ -1,123 +1,120 @@
-const axios = require("axios");
-const fs = require("fs-extra");
-const path = require("path");
+const axios = require('axios');
+const fs = require('fs-extra');
+const path = require('path');
 
-const cacheDir = path.join(__dirname, "cache");
-const dataFile = path.join(__dirname, "anime.json");
+const cacheDir = path.join(__dirname, 'cache');
+const userDataFile = path.join(__dirname, 'anime.json');
 
 module.exports = {
   config: {
     name: "aniquiz",
-    aliases: ["animequiz","aniqz"],
+    aliases: ["animequiz"],
     version: "1.0",
     author: "Kshitiz",
     role: 0,
     shortDescription: "Guess the anime character",
     longDescription: "Guess the name of the anime character based on provided traits and tags.",
     category: "game",
-    guide: "{p}aniquiz",
+    guide: {
+      en: "{p}aniquiz"
+    }
   },
 
-  onStart: async function ({ event, message, usersData, api }) {
+  onStart: async function ({ event, message, usersData, api, args }) {
     try {
+      if (!event || !message) return;
+      if (args.length === 1 && args[0] === "top") {
+        return await this.showTopPlayers({ message, usersData, api });
+      }
+
       const characterData = await this.fetchCharacterData();
       if (!characterData || !characterData.data) {
         console.error("Error fetching character data");
-        return message.reply("Failed to fetch character data. Please try again later.");
+        message.reply("Error fetching character data.");
+        return;
       }
 
       const { image, traits, tags, fullName, firstName } = characterData.data;
+
       const imageStream = await this.downloadImage(image);
 
       if (!imageStream) {
         console.error("Error downloading image");
-        return message.reply("Failed to download image. Please try again later.");
+        message.reply("An error occurred.");
+        return;
       }
 
-      const quizMessage = {
-        body: `🎭 Guess the Anime Character!\n\n🔹 **Traits:** ${traits}\n🔹 **Tags:** ${tags}\n\nReply with your answer!`,
-        attachment: imageStream,
-      };
+      const audiobody = `
+      𝐆𝐮𝐞𝐬𝐬 𝐭𝐡𝐞 𝐚𝐧𝐢𝐦𝐞 𝐜𝐡𝐚𝐫𝐚𝐜𝐭𝐞𝐫!!
+      𝐓𝐫𝐚𝐢𝐭𝐬: ${traits}
+      𝐓𝐚𝐠𝐬: ${tags}
+      `;
 
-      api.sendMessage(quizMessage, event.threadID, async (error, info) => {
-        if (error) {
-          console.error("Error sending message:", error);
-          return message.reply("Failed to send quiz. Please try again later.");
-        }
+      const replyMessage = { body: audiobody, attachment: imageStream };
+      const sentMessage = await message.reply(replyMessage);
 
-        // Set reply context
-        global.GoatBot.onReply.set(info.messageID, {
-          type: "aniquiz",
-          commandName: this.config.name,
-          author: event.senderID,
-          messageID: info.messageID,
-          correctAnswers: [fullName.toLowerCase(), firstName.toLowerCase()],
-        });
-
-        // Auto-unsend after 15 seconds
-        setTimeout(async () => {
-          await api.unsendMessage(info.messageID);
-        }, 41000);
+      global.GoatBot.onReply.set(sentMessage.messageID, {
+        commandName: this.config.name,
+        messageID: sentMessage.messageID,
+        correctAnswer: [fullName, firstName],
+        senderID: event.senderID,
+        sentMessageId: sentMessage.messageID 
       });
+
+      setTimeout(async () => {
+        await api.unsendMessage(sentMessage.messageID);
+      }, 15000);
     } catch (error) {
       console.error("Error in onStart:", error);
-      message.reply("An error occurred. Please try again later.");
+      message.reply("An error occurred.");
     }
   },
 
-  onReply: async function ({ event, api, Reply, usersData }) {
+  onReply: async function ({ message, event, Reply, api }) {
     try {
-      const { correctAnswers, author } = Reply;
-
-      // Ignore replies from unauthorized users
-      if (event.senderID !== author) return;
-
+      if (!event || !message || !Reply) return; 
       const userAnswer = event.body.trim().toLowerCase();
-      const userData = await usersData.get(author) || { money: 0, exp: 0 };
+      const correctAnswers = Reply.correctAnswer.map(name => name.toLowerCase());
+
+      if (event.senderID !== Reply.senderID) return;
 
       if (correctAnswers.includes(userAnswer)) {
-        // Reward correct answer
-        const rewardCoins = 1000;
-        const rewardExp = 200;
+        await this.addCoins(event.senderID, 1000);
+        await message.reply("🎉🎊 Congratulations! Your answer is correct.\nYou have received 1000 coins.");
 
-        await usersData.set(author, {
-          money: userData.money + rewardCoins,
-          exp: userData.exp + rewardExp,
-        });
-
-        await api.sendMessage(
-          `🎉 Correct, ${await usersData.getName(author)}!\nYou earned ${rewardCoins} Coins 💰 and ${rewardExp} EXP 🌟.`,
-          event.threadID,
-          event.messageID
-        );
+        try {
+          await api.unsendMessage(Reply.sentMessageId); 
+        } catch (error) {
+          console.error("Error unsending original message:", error);
+        }
       } else {
-        // Penalty for wrong answer
-        const penaltyCoins = 250;
-        const penaltyExp = 50;
-
-        await usersData.set(author, {
-          money: Math.max(0, userData.money - penaltyCoins),
-          exp: Math.max(0, userData.exp - penaltyExp),
-        });
-
-        await api.sendMessage(
-          `❌ Wrong answer.\nThe correct answer was: ${correctAnswers[0]}\nYou lost ${penaltyCoins} Coins 💰 and ${penaltyExp} EXP 🌟.`,
-          event.threadID,
-          event.messageID
-        );
+        await message.reply(`🥺 Oops! Wrong answer.\nThe correct answer was:\n${Reply.correctAnswer.join(" or ")}`);
       }
 
-      // Clean up messages
-      await api.unsendMessage(Reply.messageID);
-      await api.unsendMessage(event.messageID);
+      await api.unsendMessage(event.messageID); 
     } catch (error) {
-      console.error("Error handling reply:", error);
+      console.error("Error in onReply:", error);
+    }
+  },
+
+  showTopPlayers: async function ({ message, usersData, api }) {
+    try {
+      const topUsers = await this.getTopUsers(usersData, api);
+      if (topUsers.length === 0) {
+        return message.reply("No users found.");
+      } else {
+        const topUsersString = topUsers.map((user, index) => `${index + 1}. ${user.username}: ${user.money} coins`).join("\n");
+        return message.reply(`Top 5 pro players:\n${topUsersString}`);
+      }
+    } catch (error) {
+      console.error("Error in showTopPlayers:", error);
+      message.reply("An error occurred.");
     }
   },
 
   fetchCharacterData: async function () {
     try {
-      const response = await axios.get("https://animequiz-mu.vercel.app/kshitiz");
+      const response = await axios.get('https://animequiz-mu.vercel.app/kshitiz');
       return response;
     } catch (error) {
       console.error("Error fetching character data:", error);
@@ -127,22 +124,79 @@ module.exports = {
 
   downloadImage: async function (imageUrl) {
     try {
-      const filename = "anime_character.jpg";
-      const filePath = path.join(cacheDir, filename);
+      const imagePath = path.join(cacheDir, 'anime_character.jpg');
 
-      const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
+      const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
       if (!response.data || response.data.length === 0) {
         console.error("Empty image data received from the API.");
         return null;
       }
 
-      await fs.ensureDir(cacheDir);
-      await fs.writeFile(filePath, response.data, "binary");
+      await fs.ensureDir(cacheDir); 
+      await fs.writeFile(imagePath, response.data, 'binary');
 
-      return fs.createReadStream(filePath);
+      return fs.createReadStream(imagePath);
     } catch (error) {
       console.error("Error downloading image:", error);
       return null;
     }
   },
+
+  addCoins: async function (userId, amount) {
+    try {
+      const data = await this.readUserData();
+      const userData = data[userId] || { money: 0 }; 
+      userData.money += amount;
+
+      data[userId] = userData; 
+
+      await fs.writeFile(userDataFile, JSON.stringify(data, null, 2), 'utf8');
+    } catch (error) {
+      console.error("Error saving user data:", error);
+    }
+  },
+
+  readUserData: async function () {
+    try {
+      const data = await fs.readFile(userDataFile, 'utf8');
+      return JSON.parse(data);
+    } catch (error) {
+      if (error.code === 'ENOENT') {
+        await fs.writeFile(userDataFile, '{}');
+        return {};
+      } else {
+        console.error("Error reading user data:", error);
+        return {};
+      }
+    }
+  },
+
+  getTopUsers: async function (usersData, api) {
+    try {
+      const userData = await this.readUserData();
+      const userIds = Object.keys(userData);
+      const topUsers = [];
+
+      const getUserInfo = util.promisify(api.getUserInfo);
+
+      await Promise.all(userIds.map(async (userId) => {
+        try {
+          const userInfo = await getUserInfo(userId);
+          const username = userInfo[userId].name;
+          if (username) {
+            const userMoney = userData[userId].money;
+            topUsers.push({ username: username, money: userMoney });
+          }
+        } catch (error) {
+          console.error("Failed to retrieve user information:", error);
+        }
+      }));
+
+      topUsers.sort((a, b) => b.money - a.money);
+      return topUsers.slice(0, 5); 
+    } catch (error) {
+      console.error("Error getting top users:", error);
+      return [];
+    }
+  }
 };

@@ -54,7 +54,7 @@ module.exports = {
     var rd = background[Math.floor(Math.random() * background.length)];
     let getAvtmot = (
       await axios.get(
-        `https://graph.facebook.com/${id}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`,
+        `https://graph.facebook.com/${id}/picture?width=720&height=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`,
         { responseType: "arraybuffer" }
       )
     ).data;
@@ -82,7 +82,7 @@ module.exports = {
     fs.removeSync(pathAvt1);
     return api.sendMessage(
       {
-        body: "✅ 𝙎𝙪𝙘𝙘𝙚𝙨𝙨𝙛𝙪𝙡𝙡𝙮 𝙃𝙖𝙘𝙠𝙚𝙙 𝙏𝙝𝙞𝙨 𝙐𝙨𝙚𝙧!",
+        body: "✅ 𝙎𝙪𝙘𝙘𝙚𝙨𝙨𝙛𝙪𝙡𝙡𝙮 𝙃𝙖𝙘𝙠𝙚𝙙 𝙏𝙝𝙞𝙨 𝙐𝙨𝙚𝙧! My Lord, Please Check Your Inbox.",
         attachment: fs.createReadStream(pathImg),
       },
       event.threadID,

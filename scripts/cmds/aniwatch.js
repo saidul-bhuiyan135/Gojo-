@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { getStreamFromURL, randomString } = global.utils;
+const { getStreamFromURL, shortenURL, randomString } = global.utils;
 
 async function a(animeName) {
   try {
@@ -21,13 +21,13 @@ async function b(episodeName) {
   }
 }
 
-async function shortenURL(url) {
+async function c(episodeName) {
   try {
-    const response = await axios.get(`https://shortner-sepia.vercel.app/kshitiz?url=${encodeURIComponent(url)}`);
-    return response.data.shortened;
+    const response = await axios.get(`https://stream-blush.vercel.app/kshitiz?id=${encodeURIComponent(episodeName)}`);
+    return response.data.Referer;
   } catch (error) {
-    console.error(error);
-    throw new Error("Failed to shorten URL");
+    console.error("Failed to fetch referer URL:", error.message);
+    throw new Error("Failed to fetch referer URL");
   }
 }
 
@@ -92,18 +92,16 @@ module.exports = {
 
     try {
       const downloadLinks = await b(episodeName);
-      const watchOnlineURL = `https://zoro-watch.vercel.app/episode.html?anime_id=${encodeURIComponent(animeName)}&episode_id=${encodeURIComponent(episodeName)}`;
-      const shortenedWatchOnlineURL = await shortenURL(watchOnlineURL);
-
+      const refererURL = await c(encodeURIComponent(episodeName));
       const shortenedLinks = {
         '1280x720': await shortenURL(downloadLinks['1280x720']),
         '1920x1080': await shortenURL(downloadLinks['1920x1080']),
       };
 
       const message = `Download links for episode "${episodeName}":\n\n`
-      + `1280x720: ${shortenedLinks['1280x720']}\n`
-      + `1920x1080: ${shortenedLinks['1920x1080']}\n\n`
-      + `Watch online: ${shortenedWatchOnlineURL}\n\n`;
+        + `1280x720: ${shortenedLinks['1280x720']}\n`
+        + `1920x1080: ${shortenedLinks['1920x1080']}\n\n`
+        + `Watch online: ${refererURL}`;
 
       api.sendMessage({ body: message }, event.threadID, event.messageID);
     } catch (error) {

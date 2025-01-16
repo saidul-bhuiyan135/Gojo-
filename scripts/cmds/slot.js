@@ -34,24 +34,18 @@ module.exports = {
       return message.reply(getLang("not_enough_money"));
     }
 
-    // স্লট সিম্বলস
-    const slots = ["💚", "💛", "💙"];
-    
-    // স্লটগুলো র্যান্ডম ভাবে নির্বাচন
+    const slots = ["💚", "💛", "💙", "💛", "💚", "💙", "💙", "💛", "💚"];
     const slot1 = slots[Math.floor(Math.random() * slots.length)];
     const slot2 = slots[Math.floor(Math.random() * slots.length)];
     const slot3 = slots[Math.floor(Math.random() * slots.length)];
 
-    // প্রাপ্ত জেতার পরিমাণ
     const winnings = calculateWinnings(slot1, slot2, slot3, amount);
 
-    // ব্যবহারকারীর নতুন অর্থ আপডেট করা
     await usersData.set(senderID, {
       money: userData.money + winnings,
       data: userData.data,
     });
 
-    // স্পিন ফলাফল
     const messageText = getSpinResultMessage(slot1, slot2, slot3, winnings, getLang);
 
     return message.reply(messageText);
@@ -59,26 +53,16 @@ module.exports = {
 };
 
 function calculateWinnings(slot1, slot2, slot3, betAmount) {
-  const randomOutcome = Math.random();
-
-  // যদি হারানোর সম্ভাবনা (0-49%)
-  if (randomOutcome < 0.5) {
-    return -betAmount; // হারানো
-  }
-
-  // যদি জেতার সম্ভাবনা (50-100%)
-  if (slot1 === slot2 && slot2 === slot3) {
-    if (slot1 === "💚") {
-      return betAmount * 10; // 💚 স্লট, ১০ গুণ
-    } else if (slot1 === "💛") {
-      return betAmount * 5; // 💛 স্লট, ৫ গুণ
-    } else {
-      return betAmount * 3; // 💙 স্লট, ৩ গুণ
-    }
+  if (slot1 === "💚" && slot2 === "💚" && slot3 === "💚") {
+    return betAmount * 10;
+  } else if (slot1 === "💛" && slot2 === "💛" && slot3 === "💛") {
+    return betAmount * 5;
+  } else if (slot1 === slot2 && slot2 === slot3) {
+    return betAmount * 3;
   } else if (slot1 === slot2 || slot1 === slot3 || slot2 === slot3) {
-    return betAmount * 2; // ২টি স্লট এক রকম হলে ২ গুণ
+    return betAmount * 2;
   } else {
-    return -betAmount; // স্লটগুলো আলাদা হলে হারানো
+    return -betAmount;
   }
 }
 
@@ -92,4 +76,4 @@ function getSpinResultMessage(slot1, slot2, slot3, winnings, getLang) {
   } else {
     return getLang("lose_message", -winnings) + `\[ ${slot1} | ${slot2} | ${slot3} ]`;
   }
-}
+        }

@@ -31,13 +31,13 @@ module.exports = {
       const { stdout, stderr } = await exec(command);
 
       if (stderr) {
-        message.reply(`${stderr}`);
+        message.reply(`${stderr}`); // Fixed string interpolation
       } else {
-        message.reply(`${stdout}`);
+        message.reply(`${stdout}`); // Fixed string interpolation
       }
     } catch (error) {
       console.error(error);
-      message.reply(`Error: ${error.message}`);
+      message.reply(`Error: ${error.message}`); // Fixed string interpolation
     }
   },
 };

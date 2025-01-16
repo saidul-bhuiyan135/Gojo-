@@ -1,7 +1,7 @@
 const axios = require('axios');
 const jimp = require("jimp");
-const fs = require("fs");
-const path = require("path");
+const fs = require("fs")
+
 
 module.exports = {
     config: {
@@ -17,40 +17,31 @@ module.exports = {
         guide: "{pn}"
     },
 
+
+
     onStart: async function ({ message, event, args }) {
         const mention = Object.keys(event.mentions);
         if (mention.length == 0) return message.reply("Please mention someone");
         else {
             const one = event.senderID, two = mention[0];
-            bal(one, two).then(ptth => { 
-                message.reply({ body: "Ouch 😴", attachment: fs.createReadStream(ptth) }) 
-            });
+            bal(one, two).then(ptth => { message.reply({ body: "Ouch 😴", attachment: fs.createReadStream(ptth) }) })
         }
     }
+
+
 };
 
 async function bal(one, two) {
 
     let avone = await jimp.read(`https://graph.facebook.com/${one}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`)
-    avone.circle();
-    
+    avone.circle()
     let avtwo = await jimp.read(`https://graph.facebook.com/${two}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`)
-    avtwo.circle();
+    avtwo.circle()
+    let pth = "ball.png"
+    let img = await jimp.read("https://i.ibb.co/6Jz7yvX/image.jpg")
 
-    // Set path to save the image in the tmp folder
-    const tmpDir = path.join(__dirname, "tmp"); // Assuming "tmp" folder is in the same directory
-    if (!fs.existsSync(tmpDir)) {
-        fs.mkdirSync(tmpDir); // Create the tmp folder if it doesn't exist
-    }
+    img.resize(1080, 1320).composite(avone.resize(170, 170), 200, 320).composite(avtwo.resize(170, 170), 610, 70);
 
-    const pth = path.join(tmpDir, "ball.png");
-
-    // Load the base image and composite the avatars onto it
-    let img = await jimp.read("https://i.ibb.co/6Jz7yvX/image.jpg");
-    img.resize(1080, 1320)
-        .composite(avone.resize(170, 170), 200, 320)
-        .composite(avtwo.resize(170, 170), 610, 70);
-
-    await img.writeAsync(pth); // Save the image to tmp/ball.png
-    return pth;
-}
+    await img.writeAsync(pth)
+    return pth
+      }

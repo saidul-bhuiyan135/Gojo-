@@ -32,7 +32,7 @@
 		"gradient-string": "^2.0.2",
 		"graphql-query-to-json": "^2.0.1",
 		"https": "^1.0.0",
-		"jimp": "^1.6.0",
+		"jimp": "^0.16.13",
 		"jsonlint-mod": "^1.7.6",
 		"mal-scraper": "^2.13.2",
 		"moment-timezone": "^0.5.34",

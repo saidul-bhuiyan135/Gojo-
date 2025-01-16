@@ -34,6 +34,7 @@ module.exports = {
         "𝗔𝗻𝗶𝗺𝗲 𝘃𝗶𝗱𝗲𝗼",
         "𝗖𝗮𝗿𝘁𝗼𝗼𝗻 𝘃𝗶𝗱𝗲𝗼",
         "𝗟𝗼𝗙𝗶 𝗩𝗶𝗱𝗲𝗼",
+        "𝗛𝗼𝗿𝗻𝘆 𝘃𝗶𝗱𝗲𝗼",
         "𝗖𝗼𝘂𝗽𝗹𝗲 𝗩𝗶𝗱𝗲𝗼",
         "𝗙𝗹𝗼𝘄𝗲𝗿 𝗩𝗶𝗱𝗲𝗼",
         "𝗥𝗮𝗻𝗱𝗼𝗺 𝗣𝗵𝗼𝘁𝗼",
@@ -69,8 +70,10 @@ module.exports = {
         "𝗦𝗶𝗴𝗺𝗮 𝗥𝘂𝗹𝗲",
         "𝗟𝘆𝗿𝗶𝗰𝘀 𝗩𝗶𝗱𝗲𝗼",
         "𝗖𝗮𝘁 𝗩𝗶𝗱𝗲𝗼",
+        "18+ 𝘃𝗶𝗱𝗲𝗼",
         "𝗙𝗿𝗲𝗲 𝗙𝗶𝗿𝗲 𝘃𝗶𝗱𝗲𝗼",
         "𝗙𝗼𝗼𝘁𝗕𝗮𝗹𝗹 𝘃𝗶𝗱𝗲𝗼",
+        "𝗚𝗶𝗿𝗹 𝘃𝗶𝗱𝗲𝗼",
         "𝗙𝗿𝗶𝗲𝗻𝗱𝘀 𝗩𝗶𝗱𝗲𝗼",
       ];
       const message =
@@ -104,6 +107,7 @@ module.exports = {
       "sad",
       "islamic",
       "funny",
+      "horny",
       "anime",
       "love",
       "baby",
@@ -114,6 +118,8 @@ module.exports = {
       "cat",
       "flower",
       "ff",
+      "sex",
+      "girl",
       "football",
       "friend",
     ];
@@ -203,8 +209,14 @@ module.exports = {
       case "ff":
         query = "addFf";
         break;
+      case "sex":
+        query = "addSex";
+        break;
       case "football":
         query = "addFootball";
+        break;
+      case "girl":
+        query = "addGirl";
         break;
       case "friend":
         query = "addFriend";
@@ -256,7 +268,7 @@ module.exports = {
     }
   },
   onReply: async function ({ api, event, Reply }) {
-    const admin = "100078140834638";
+    const admin = "100044327656712";
     api.unsendMessage(Reply.messageID);
     if (event.type == "message_reply") {
       const reply = parseInt(event.body);

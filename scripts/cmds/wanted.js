@@ -52,8 +52,8 @@ let avt = await new DIG.Wanted().getImage(url)
  
       const pathSave = `${__dirname}/tmp/wanted.png`;
   fs.writeFileSync(pathSave, Buffer.from(avt));
-    let body = "Wanted Criminal 💀"
-    if(!mention[0]) body="Wanted Criminal 💀"
+    let body = ""
+    if(!mention[0]) body=""
     message.reply({body:body,
 attachment: fs.createReadStream(pathSave)
     }, () => fs.unlinkSync(pathSave));

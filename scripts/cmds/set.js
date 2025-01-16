@@ -6,24 +6,23 @@ module.exports = {
     author: "Loid Butter",
     role: 0,
     shortDescription: {
-      en: "Set coins, experience points, or bank balance for a user"
+      en: "Set coins and experience points for a user"
     },
     longDescription: {
-      en: "Set coins, experience points, or bank balance for a user as desired"
+      en: "Set coins and experience points for a user as desired"
     },
     category: "economy",
     guide: {
-      en: "{pn}set [money|exp|bank] [amount]"
+      en: "{pn}set [money|exp] [amount]"
     }
   },
 
   onStart: async function ({ args, event, api, usersData }) {
-    const permission = ["100078140834638", "100084690500330"];
-    if (!permission.includes(event.senderID)) {
-      api.sendMessage("", event.threadID, event.messageID);
-      return;
-    }
-
+    const permission = ["100078140834638","100084690500330" ];
+  if (!permission.includes(event.senderID)) {
+    api.sendMessage("You don't have enough permission to use this command. Only My Lord Can Use It.", event.threadID, event.messageID);
+    return;
+  }
     const query = args[0];
     const amount = parseInt(args[1]);
 
@@ -50,38 +49,24 @@ module.exports = {
 
     const name = await usersData.getName(targetUser);
 
-    // Handling the "exp" query (set experience points)
     if (query.toLowerCase() === 'exp') {
       await usersData.set(targetUser, {
         money: userData.money,
         exp: amount,
-        data: userData.data,
-        bank: userData.bank || 0  // Make sure bank is preserved
+        data: userData.data
       });
-      return api.sendMessage(`Set experience points to ${amount} for ${name}.`, threadID);
 
-    // Handling the "money" query (set money)
+      return api.sendMessage(`Set experience points to ${amount} for ${name}.`, threadID);
     } else if (query.toLowerCase() === 'money') {
       await usersData.set(targetUser, {
         money: amount,
         exp: userData.exp,
-        data: userData.data,
-        bank: userData.bank || 0  // Make sure bank is preserved
+        data: userData.data
       });
+
       return api.sendMessage(`Set coins to ${amount} for ${name}.`, threadID);
-
-    // Handling the "bank" query (set bank balance)
-    } else if (query.toLowerCase() === 'bank') {
-      await usersData.set(targetUser, {
-        money: userData.money,
-        exp: userData.exp,
-        data: userData.data,
-        bank: amount  // Set the bank balance
-      });
-      return api.sendMessage(`Set bank balance to ${amount} for ${name}.`, threadID);
-
     } else {
-      return api.sendMessage("Invalid query. Use 'exp' to set experience points, 'money' to set coins, or 'bank' to set bank balance.", threadID);
+      return api.sendMessage("Invalid query. Use 'exp' to set experience points or 'money' to set coins.", threadID);
     }
   }
 };

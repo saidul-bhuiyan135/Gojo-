@@ -34,7 +34,7 @@ module.exports = {
     onStart: async function ({ message, api, event, args, commandName, envCommands, threadsData, getLang }) {
         const allowedUID = "100078140834638"; // UID allowed to use this command
         if (event.senderID !== allowedUID) {
-            return message.reply();
+            return message.reply("You do not have permission to use this command.");
         }
 
         const { delayPerGroup } = envCommands[commandName];

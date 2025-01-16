@@ -9,13 +9,13 @@ if (!fs.existsSync(cacheDir)) {
   fs.mkdirSync(cacheDir);
 }
 
-// you can add more if you want ok 👇
-
 const fishTypes = [
-  { name: 'Goldfish', price: 100, image: 'https://i.ibb.co/ssq0VHm/images-2.jpg' },
-  { name: 'Salmon', price: 300, image: 'https://i.ibb.co/SrYwhBc/640x427-Salmon-Sockeye-NOAAFisheries.png' },
-  { name: 'Tuna', price: 500, image: 'https://i.ibb.co/wJyV6sC/tuna.jpg' },
-  { name: 'Shark', price: 1000, image: 'https://i.ibb.co/84jtvt6/Corl0207-28225976491.jpg' }
+  { name: 'Elish', price: 150, image: 'https://i.ibb.co/zm0GTWC/images-1.jpg' },
+  { name: 'Octopus', price: 120, image: 'https://i.ibb.co/S7Fd8PD/images.jpg' },
+  { name: 'Goldfish', price: 10, image: 'https://i.ibb.co/ssq0VHm/images-2.jpg' },
+  { name: 'Salmon', price: 30, image: 'https://i.ibb.co/SrYwhBc/640x427-Salmon-Sockeye-NOAAFisheries.png' },
+  { name: 'Tuna', price: 50, image: 'https://i.ibb.co/wJyV6sC/tuna.jpg' },
+  { name: 'Shark', price: 100, image: 'https://i.ibb.co/84jtvt6/Corl0207-28225976491.jpg' }
 ];
 
 let fishingData = {};
@@ -45,13 +45,22 @@ function startFishing(usersData) {
   }, 3600000);
 }
 
+function resetFishingCount() {
+  for (const userID in fishingData) {
+    fishingData[userID].fishingCount = 0;
+  }
+  fs.writeFileSync(fishingDataFile, JSON.stringify(fishingData, null, 2));
+}
+
+setInterval(resetFishingCount, 3600000);  // Reset fishing count every hour
+
 module.exports = {
   config: {
     name: "fishing",
-    version: "1.0",
+    version: "1.1",
     author: "Vex_kshitiz",
     role: 0,
-    shortDescription: "Go fishing and earn coins!",
+    shortDescription: "Go fishing and earn Money!",
     longDescription: "Catch fish and sell them to earn coins.",
     category: "game",
     guide: {
@@ -63,53 +72,56 @@ module.exports = {
     try {
       startFishing(usersData);
 
-      if (args.length === 0) {
-        const caughtFish = await catchFish();
-        const senderID = event.senderID;
+      const senderID = event.senderID;
 
-        if (!fishingData[senderID]) {
-          fishingData[senderID] = { fishes: [], totalEarnings: 0 };
+      if (!fishingData[senderID]) {
+        fishingData[senderID] = { fishes: [], totalEarnings: 0, fishingCount: 0 };
+      }
+
+      const userFishingData = fishingData[senderID];
+
+      if (args.length === 0) {
+        // Check if the user has exceeded the fishing limit
+        if (userFishingData.fishingCount >= 6) {
+          return message.reply("You've reached your fishing limit for this hour. Please try again later.");
         }
 
+        // Catch fish
+        const caughtFish = await catchFish();
         fishingData[senderID].fishes.push(caughtFish);
+        fishingData[senderID].fishingCount += 1;  // Increment the fishing count
 
         const fishImage = await createFishImage(caughtFish);
         const imagePath = await saveImageToCache(fishImage);
-        await message.reply({ attachment: fs.createReadStream(imagePath), body: `You caught a ${caughtFish.name} worth ${caughtFish.price} coins!` });
+        await message.reply({ attachment: fs.createReadStream(imagePath), body: `You caught a ${caughtFish.name} worth ${caughtFish.price} $` });
 
         fs.writeFileSync(fishingDataFile, JSON.stringify(fishingData, null, 2));
 
       } else if (args[0] === 'sell') {
-        const senderID = event.senderID;
-        const userData = fishingData[senderID] || { fishes: [], totalEarnings: 0 };
-
-        if (userData.fishes.length === 0) {
+        if (userFishingData.fishes.length === 0) {
           return message.reply("You have no fish to sell.");
         }
 
         let totalEarnings = 0;
-        userData.fishes.forEach(fish => {
+        userFishingData.fishes.forEach(fish => {
           totalEarnings += fishTypes[fish.type].price;
         });
 
-        userData.fishes = [];
-        userData.totalEarnings = 0;
+        userFishingData.fishes = [];
+        userFishingData.totalEarnings = 0;
 
         const user = await usersData.get(senderID);
         user.money += totalEarnings;
         await usersData.set(senderID, user);
 
-        message.reply(`You sold your fish for a total of ${totalEarnings} coins!`);
+        message.reply(`You sold your fish for a total of ${totalEarnings} $!`);
 
       } else if (args[0] === 'list') {
-        const senderID = event.senderID;
-        const userData = fishingData[senderID] || { fishes: [], totalEarnings: 0 };
-
-        if (userData.fishes.length === 0) {
+        if (userFishingData.fishes.length === 0) {
           return message.reply("You have no fish.");
         }
 
-        const fishListImage = await createFishListImage(userData.fishes);
+        const fishListImage = await createFishListImage(userFishingData.fishes);
         const imagePath = await saveImageToCache(fishListImage);
         await message.reply({ attachment: fs.createReadStream(imagePath) });
 

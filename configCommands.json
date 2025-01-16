@@ -31,11 +31,20 @@
     },
     "wanted": {
       "deltaNext": 5
+    },
+    "gay": {
+      "deltaNext": 5
+    },
+    "notification2": {
+      "delayPerGroup": 250
     }
   },
   "envEvents": {
     "logsbot": {
       "allow": true
     }
-  }
+  },
+  "commandUnload": [
+    "baby.js"
+  ]
 }

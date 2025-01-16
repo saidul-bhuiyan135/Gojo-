@@ -5,7 +5,7 @@ module.exports = {
     author: "OTINXSANDIP",
     role: 0,
     shortDescription: {
-      en: "Top 10 Ranks"
+      en: "Top 10 Exp users"
     },
     longDescription: {
       en: ""
@@ -30,7 +30,7 @@ module.exports = {
 
     const topUsersList = topExp.map((user, index) => `${index + 1}. ${user.name}: ${user.exp}`);
 
-    const messageText = `𝐓𝐨𝐩 𝟏𝟎 𝐑𝐚𝐧𝐤𝐬 \n${topUsersList.join('\n')}`;
+    const messageText = `Top 10 Rank Users:\n${topUsersList.join('\n')}`;
 
     message.reply(messageText);
   }

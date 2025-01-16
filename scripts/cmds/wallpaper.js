@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
   config: {
-    name: "wp",
+    name: "ws",
     aliases: [],
     author: "kshitiz",
     version: "2.0",

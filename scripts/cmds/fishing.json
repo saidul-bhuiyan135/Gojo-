@@ -1,16 +1,27 @@
 {
+  "100084690500330": {
+    "fishes": [],
+    "totalEarnings": 0,
+    "fishingCount": 0
+  },
   "100078140834638": {
     "fishes": [],
-    "totalEarnings": 0
+    "totalEarnings": 0,
+    "fishingCount": 0
+  },
+  "61550485364185": {
+    "fishes": [],
+    "totalEarnings": 0,
+    "fishingCount": 0
   },
   "61566533590967": {
-    "fishes": [
-      {
-        "type": 2,
-        "name": "Tuna",
-        "price": 500
-      }
-    ],
-    "totalEarnings": 0
+    "fishes": [],
+    "totalEarnings": 0,
+    "fishingCount": 0
+  },
+  "100092366766774": {
+    "fishes": [],
+    "totalEarnings": 0,
+    "fishingCount": 0
   }
 }

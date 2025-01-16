@@ -244,8 +244,8 @@ module.exports = {
   },
   downloadYouTube: async function (url, api, event, path) {
     try {
-      const res = await axios.get(`https://yt-downloader-eta.vercel.app/kshitiz?url=${encodeURIComponent(url)}`);
-      const videoUrl = res.data.url;
+      const res = await axios.get(`https://yt-dl-zeta.vercel.app/video?url=${encodeURIComponent(url)}`);
+      const videoUrl = res.data.videoUrl;
 
       const response = await axios({
         method: "GET",

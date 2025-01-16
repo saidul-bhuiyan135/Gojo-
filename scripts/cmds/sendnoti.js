@@ -8,11 +8,24 @@ module.exports = {
 		countDown: 5,
 		role: 0,
 		description: {
+			vi: "Tạo và gửi thông báo đến các nhóm do bạn quản lý",
 			en: "Create and send notification to groups that you manage"
 		},
 		category: "box chat",
 		guide: {
-		en: "   {pn} create <groupName>: Create a new notification group with name <groupName>"
+			vi: "   {pn} create <groupName>: Tạo một group noti (notification) mới với tên gọi <groupName>"
+				+ "\n   Ví dụ:\n    {pn} create TEAM1"
+				+ "\n\n   {pn} add <groupName>: thêm box chat hiện tại vào group noti <groupName> (bạn phải là quản trị viên của box chat này)"
+				+ "\n   Ví dụ:\n    {pn} add TEAM1"
+				+ "\n\n   {pn} list: hiển thị danh sách các group noti bạn đang quản lý"
+				+ "\n\n   {pn} info <groupName>: xem thông tin của group noti <groupName>"
+				+ "\n\n   {pn} delete: xóa box chat hiện tại khỏi group noti <groupName> (bạn phải là người tạo group noti này)"
+				+ "\n   Ví dụ:\n    {pn} delete TEAM1"
+				+ "\n\n   {pn} send <groupName> | <message>: gửi thông báo tới tất cả các nhóm trong group noti <groupName> (bạn phải là quản trị viên của những box đó)"
+				+ "\n   Ví dụ:\n    {pn} remove TEAM1"
+				+ "\n\n   {pn} remove <groupName>: xóa group noti <groupName> (bạn phải là người tạo group noti <groupName>)"
+				+ "\n   Ví dụ:\n    {pn} remove TEAM1",
+			en: "   {pn} create <groupName>: Create a new notification group with name <groupName>"
 				+ "\n   Example:\n    {pn} create TEAM1"
 				+ "\n\n   {pn} add <groupName>: add current box chat to notification group <groupName> (you must be admin of this box chat)"
 				+ "\n   Example:\n    {pn} add TEAM1"

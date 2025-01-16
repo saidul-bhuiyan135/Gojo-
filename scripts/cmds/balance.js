@@ -35,10 +35,10 @@ module.exports = {
 	// Helper function to format numbers into short form
 	formatMoney: function (amount) {
 		if (amount === undefined || amount === null) return "0"; // Handle case when money is undefined or null
-		if (amount >= 1e12) return (amount / 1e12).toFixed(1) + 't';
-		if (amount >= 1e9) return (amount / 1e9).toFixed(1) + 'b';
-		if (amount >= 1e6) return (amount / 1e6).toFixed(1) + 'm';
-		if (amount >= 1e3) return (amount / 1e3).toFixed(1) + 'k';
+		if (amount >= 1e12) return (amount / 1e12).toFixed(1) + '𝐓';
+		if (amount >= 1e9) return (amount / 1e9).toFixed(1) + '𝐁';
+		if (amount >= 1e6) return (amount / 1e6).toFixed(1) + '𝐌';
+		if (amount >= 1e3) return (amount / 1e3).toFixed(1) + '𝐊';
 		return amount.toString();
 	},
 

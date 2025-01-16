@@ -9,7 +9,7 @@ module.exports = {
     name: "quiz2",
     aliases: ["qz2"],
     version: "2.0",
-    author: "Kshitiz", // Modified by Mohammed Abir
+    author: "Kshitiz",
     role: 0,
     shortDescription: "Play quiz",
     longDescription: "Play a quiz based on different categories",
@@ -50,9 +50,7 @@ module.exports = {
       global.GoatBot.onReply.set(sentQuestion.messageID, {
         commandName: this.config.name,
         messageID: sentQuestion.messageID,
-        correctAnswerLetter: quizData.correct_answer_letter.toLowerCase(), // Lowercase for case-insensitive checking
-        author: event.senderID, // Store the author to restrict replies
-        usersAnswered: new Set() // Track users who have answered
+        correctAnswerLetter: quizData.correct_answer_letter.toLowerCase()  // Lowercase for case-insensitive checking
       });
 
       setTimeout(async () => {
@@ -68,20 +66,8 @@ module.exports = {
   },
 
   onReply: async function ({ message, event, Reply, usersData }) {
-    const userID = event.senderID;
-    const userAnswer = event.body.trim().toLowerCase(); // Convert user answer to lowercase
+    const userAnswer = event.body.trim().toLowerCase();  // Convert user answer to lowercase
     const correctAnswerLetter = Reply.correctAnswerLetter.toLowerCase();
-
-    // Ignore replies from unauthorized users
-    if (userID !== Reply.author) return;
-
-    // Ignore the reply if the user has already answered
-    if (Reply.usersAnswered.has(userID)) {
-      return;
-    }
-
-    // Add userID to usersAnswered set
-    Reply.usersAnswered.add(userID);
 
     // Unsend the question immediately after the user responds
     try {
@@ -90,10 +76,11 @@ module.exports = {
       console.error("Error while unsending question:", error);
     }
 
+    const userID = event.senderID;
     if (userAnswer === correctAnswerLetter) {
       // Add coins and exp for correct answer
-      const rewardCoins = 700;
-      const rewardExp = 200;
+      const rewardCoins = 800;
+      const rewardExp = 300;
       await addCoinsAndExp(userID, rewardCoins, rewardExp, usersData);
       await message.reply(`🎉🎊 Congratulations! Your answer is correct.\nYou have received ${rewardCoins} coins and ${rewardExp} EXP.`);
     } else {

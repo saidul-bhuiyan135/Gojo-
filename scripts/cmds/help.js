@@ -12,7 +12,7 @@ const doNotDelete = "[ 🐐 | Goat Bot V2 ]";
 
 module.exports = {
 	config: {
-		name: "help",
+		name: "help2",
 		version: "1.21",
 		author: "NTKhang",
 		countDown: 5,
@@ -23,7 +23,12 @@ module.exports = {
 		},
 		category: "info",
 		guide: {
-		en: "{pn} [empty | <page number> | <command name>]"
+			vi: "   {pn} [để trống | <số trang> | <tên lệnh>]"
+				+ "\n   {pn} <command name> [-u | usage | -g | guide]: chỉ hiển thị phần hướng dẫn sử dụng lệnh"
+				+ "\n   {pn} <command name> [-i | info]: chỉ hiển thị phần thông tin về lệnh"
+				+ "\n   {pn} <command name> [-r | role]: chỉ hiển thị phần quyền hạn của lệnh"
+				+ "\n   {pn} <command name> [-a | alias]: chỉ hiển thị phần tên viết tắt của lệnh",
+			en: "{pn} [empty | <page number> | <command name>]"
 				+ "\n   {pn} <command name> [-u | usage | -g | guide]: only show command usage"
 				+ "\n   {pn} <command name> [-i | info]: only show command info"
 				+ "\n   {pn} <command name> [-r | role]: only show command role"

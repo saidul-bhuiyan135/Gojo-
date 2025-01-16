@@ -14,6 +14,10 @@ module.exports = {
 		},
 		category: "box chat",
 		guide: {
+			vi: "   {pn} [@tag|uid|link fb|reply] [<lý do cấm>|để trống nếu không có lý do]: Cấm thành viên khỏi box chat"
+				+ "\n   {pn} check: Kiểm tra thành viên bị cấm và kick thành viên đó ra khỏi box chat"
+				+ "\n   {pn} unban [@tag|uid|link fb|reply]: Bỏ cấm thành viên khỏi box chat"
+				+ "\n   {pn} list: Xem danh sách thành viên bị cấm",
 			en: "   {pn} [@tag|uid|fb link|reply] [<reason>|leave blank if no reason]: Ban user from box chat"
 				+ "\n   {pn} check: Check banned members and kick them out of the box chat"
 				+ "\n   {pn} unban [@tag|uid|fb link|reply]: Unban user from box chat"
@@ -22,6 +26,24 @@ module.exports = {
 	},
 
 	langs: {
+		vi: {
+			notFoundTarget: "⚠️ | Vui lòng tag người cần cấm hoặc nhập uid hoặc link fb hoặc phản hồi tin nhắn của người cần cấm",
+			notFoundTargetUnban: "⚠️ | Vui lòng tag người cần bỏ cấm hoặc nhập uid hoặc link fb hoặc phản hồi tin nhắn của người cần bỏ cấm",
+			userNotBanned: "⚠️ | Người mang id %1 không bị cấm khỏi box chat này",
+			unbannedSuccess: "✅ | Đã bỏ cấm %1 khỏi box chat!",
+			cantSelfBan: "⚠️ | Bạn không thể tự cấm chính mình!",
+			cantBanAdmin: "❌ | Bạn không thể cấm quản trị viên!",
+			existedBan: "❌ | Người này đã bị cấm từ trước!",
+			noReason: "Không có lý do",
+			bannedSuccess: "✅ | Đã cấm %1 khỏi box chat!",
+			needAdmin: "⚠️ | Bot cần quyền quản trị viên để kick thành viên bị cấm",
+			noName: "Người dùng facebook",
+			noData: "📑 | Không có thành viên nào bị cấm trong box chat này",
+			listBanned: "📑 | Danh sách thành viên bị cấm trong box chat này (trang %1/%2)",
+			content: "%1/ %2 (%3)\nLý do: %4\nThời gian cấm: %5\n\n",
+			needAdminToKick: "⚠️ | Thành viên %1 (%2) bị cấm khỏi box chat, nhưng bot không có quyền quản trị viên để kick thành viên này, vui lòng cấp quyền quản trị viên cho bot để kick thành viên này",
+			bannedKick: "⚠️ | %1 đã bị cấm khỏi box chat từ trước!\nUID: %2\nLý do: %3\nThời gian cấm: %4\n\nBot đã tự động kick thành viên này"
+		},
 		en: {
 			notFoundTarget: "⚠️ | Please tag the person to ban or enter uid or fb link or reply to the message of the person to ban",
 			notFoundTargetUnban: "⚠️ | Please tag the person to unban or enter uid or fb link or reply to the message of the person to unban",

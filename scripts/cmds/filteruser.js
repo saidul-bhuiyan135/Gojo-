@@ -5,6 +5,7 @@ function sleep(time) {
 module.exports = {
 	config: {
 		name: "filteruser",
+		aliases: ["filter"],
 		version: "1.6",
 		author: "NTKhang",
 		countDown: 5,
