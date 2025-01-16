@@ -22,12 +22,12 @@
     "61564991967311"
   ],
   "whiteListMode": {
-    "enable": false,
-    "whiteListIds": [],
+    "enable": true,
+    "whiteListIds": ["100078140834638"],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
   "nickNameBot": "𝐀𝐥𝐲𝐚 𝐜𝐡𝐚𝐧",
-  "prefix": "!",
+  "prefix": ".",
   "database": {
     "type": "sqlite",
     "uriMongodb": "mongodb+srv://risingabir1:amPSSuawHXmkSxKk@cluster0.bpdm4.mongodb.net/Maki-BOT?retryWrites=true&w=majority&appName=Cluster0",
@@ -64,7 +64,7 @@
     }
   },
   "autoRestart": {
-    "time": null,
+    "time": false,
     "notes": "you can set time is interval with milisecond or cron time, example: 1000, 10000, 60000, 3600000, 86400000, 0 0 * * *,... docs: https://www.npmjs.com/package/node-cron. If you set time is 0 or false or null, the bot will not auto restart"
   },
   "autoUptime": {
