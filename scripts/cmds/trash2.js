@@ -26,7 +26,7 @@ module.exports = {
     }
     
     if (uid === "100078140834638") {
-      return message.reply("You are the trash 🐸🐸.");
+      return message.reply("𝗬𝗼𝘂 𝗮𝗿𝗲 𝘁𝗵𝗲 𝘁𝗿𝗮𝘀𝗵 🐸🐸.");
     }
 
     try {
