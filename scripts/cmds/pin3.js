@@ -10,8 +10,8 @@ const baseApiUrl = async () => {
 
 module.exports = {
     config: {
-        name: "pin",
-        aliases: ["pinterest"],
+        name: "pin3",
+        aliases: ["pin3"],
         version: "1.0",
         author: "Dipto",
         countDown: 15,
