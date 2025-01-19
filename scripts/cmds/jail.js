@@ -37,7 +37,7 @@ module.exports = {
 		fs.writeFileSync(pathSave, Buffer.from(img));
 		const content = args.join(' ').replace(Object.keys(event.mentions)[0], "");
 		message.reply({
-			body: `${(content || "welcome rapist to jail😈")} 🚔`,
+			body: `${(content || "welcome to jail😈")} 🚔`,
 			attachment: fs.createReadStream(pathSave)
 		}, () => fs.unlinkSync(pathSave));
 	}
