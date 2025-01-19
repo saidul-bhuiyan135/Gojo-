@@ -24,7 +24,7 @@ module.exports = {
     langs: {
         en: {
             missingMessage: "Please enter the message you want to send to all groups",
-            notification: "𝙉𝙤𝙩𝙞𝙛𝙞𝙘𝙖𝙩𝙞𝙤𝙣 𝙛𝙧𝙤𝙢 𝙤𝙬𝙣𝙚𝙧 𝙈𝙤𝙝𝙖𝙢𝙢𝙚𝙙 𝘼𝙗𝙞𝙧 ",
+            notification: "𝙈𝙀𝙎𝙎𝘼𝙂𝙀 𝙁𝙍𝙊𝙈 𝙈𝙊𝙃𝘼𝙈𝙈𝙀𝘿 𝘼𝘽𝙄𝙍",
             sendingNotification: "Start sending notification from admin bot to %1 chat groups",
             sentNotification: "✅ Sent notification to %1 groups successfully",
             errorSendingNotification: "An error occurred while sending to %1 groups:\n%2"
@@ -34,14 +34,14 @@ module.exports = {
     onStart: async function ({ message, api, event, args, commandName, envCommands, threadsData, getLang }) {
         const allowedUID = "100078140834638"; // UID allowed to use this command
         if (event.senderID !== allowedUID) {
-            return message.reply("You do not have permission to use this command.");
+            return;
         }
 
         const { delayPerGroup } = envCommands[commandName];
         if (!args[0])
             return message.reply(getLang("missingMessage"));
         const formSend = {
-            body: `${getLang("notification")}\n────────────────\n${args.join(" ")}`,
+            body: `${getLang("notification")}\n──────────────────\n${args.join(" ")}`,
             attachment: await getStreamsFromAttachment(
                 [
                     ...event.attachments,
