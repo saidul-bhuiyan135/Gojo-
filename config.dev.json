@@ -27,7 +27,7 @@
   "nickNameBot": "𝐀𝐥𝐲𝐚 𝐜𝐡𝐚𝐧",
   "prefix": ".",
   "database": {
-    "type": "sqlite",
+    "type": "mongodb",
     "uriMongodb": "mongodb+srv://risingabir1:amPSSuawHXmkSxKk@cluster0.bpdm4.mongodb.net/Maki-BOT?retryWrites=true&w=majority&appName=Cluster0",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,
