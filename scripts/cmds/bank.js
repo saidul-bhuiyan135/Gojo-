@@ -49,28 +49,28 @@ module.exports = {
       case "deposit":
       case "-d":
         if (isNaN(amount) || amount <= 0) {
-          return message.reply("❏ Please enter a valid amount to deposit.");
+          return message.reply("❏ 𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝗮 𝘃𝗮𝗹𝗶𝗱 𝗮𝗺𝗼𝘂𝗻𝘁 𝘁𝗼 𝗱𝗲𝗽𝗼𝘀𝗶𝘁.");
         }
 
         const userMoney = await usersData.get(userID, "money");
         if (userMoney < amount) {
-          return message.reply("❏ You don't have enough money to deposit.");
+          return message.reply("❏ 𝗬𝗼𝘂 𝗱𝗼𝗻'𝘁 𝗵𝗮𝘃𝗲 𝗲𝗻𝗼𝘂𝗴𝗵 𝗺𝗼𝗻𝗲𝘆 𝘁𝗼 𝗱𝗲𝗽𝗼𝘀𝗶𝘁.");
         }
 
         userBankData.bank += amount;
         await userBankData.save();
 
         await usersData.set(userID, { money: userMoney - amount });
-        return message.reply(`❏ Successfully deposited $${formatNumberWithFullForm(amount)}.`);
+        return message.reply(`❏ 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝗱𝗲𝗽𝗼𝘀𝗶𝘁𝗲𝗱 $${formatNumberWithFullForm(amount)}.`);
 
       case "withdraw":
       case "-w":
         if (isNaN(amount) || amount <= 0) {
-          return message.reply("❏ Please enter a valid amount to withdraw.");
+          return message.reply("❏ 𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝗮 𝘃𝗮𝗹𝗶𝗱 𝗮𝗺𝗼𝘂𝗻𝘁 𝘁𝗼 𝘄𝗶𝘁𝗵𝗱𝗿𝗮𝘄.");
         }
 
         if (userBankData.bank < amount) {
-          return message.reply("❏ You don't have enough money in your bank to withdraw.");
+          return message.reply("❏ 𝗬𝗼𝘂 𝗱𝗼𝗻'𝘁 𝗵𝗮𝘃𝗲 𝗲𝗻𝗼𝘂𝗴𝗵 𝗺𝗼𝗻𝗲𝘆 𝗶𝗻 𝘆𝗼𝘂𝗿 𝗯𝗮𝗻𝗸 𝘁𝗼 𝘄𝗶𝘁𝗵𝗱𝗿𝗮𝘄.");
         }
 
         userBankData.bank -= amount;
@@ -79,11 +79,11 @@ module.exports = {
         const updatedMoney = await usersData.get(userID, "money");
         await usersData.set(userID, { money: updatedMoney + amount });
 
-        return message.reply(`❏ Successfully withdrew $${formatNumberWithFullForm(amount)}. Your new bank balance is $${formatNumberWithFullForm(userBankData.bank)}.`);
+        return message.reply(`❏ 𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘄𝗶𝘁𝗵𝗱𝗿𝗲𝘄 $${formatNumberWithFullForm(amount)}. 𝗬𝗼𝘂𝗿 𝗻𝗲𝘄 𝗯𝗮𝗻𝗸 𝗯𝗮𝗹𝗮𝗻𝗰𝗲 𝗶𝘀 $${formatNumberWithFullForm(userBankData.bank)}.`);
 
       case "balance":
       case "bal":
-        return message.reply(`❏ You have $${formatNumberWithFullForm(userBankData.bank)} in the bank.`);
+        return message.reply(`❏ 𝗬𝗼𝘂 𝗵𝗮𝘃𝗲 $${formatNumberWithFullForm(userBankData.bank)} 𝗶𝗻 𝘁𝗵𝗲 𝗯𝗮𝗻𝗸.`);
 
       case "interest":
       case "i":
@@ -92,7 +92,7 @@ module.exports = {
         const timeElapsed = (Date.now() - lastClaimed) / (1000 * 60 * 60 * 24); // Days elapsed
 
         if (timeElapsed < 1) {
-          return message.reply("❏ You can claim interest only once every 24 hours.");
+          return message.reply("❏ 𝐘𝐨𝐮 𝐜𝐚𝐧 𝐜𝐥𝐚𝐢𝐦 𝐢𝐧𝐭𝐞𝐫𝐞𝐬𝐭 𝐨𝐧𝐥𝐲 𝐨𝐧𝐜𝐞 𝐞𝐯𝐞𝐫𝐲 𝟐𝟒 𝐡𝐨𝐮𝐫𝐬.");
         }
 
         const interest = userBankData.bank * interestRate * timeElapsed;
@@ -100,19 +100,19 @@ module.exports = {
         userBankData.lastInterestClaimed = Date.now();
         await userBankData.save();
 
-        return message.reply(`❏ You earned $${formatNumberWithFullForm(interest.toFixed(2))} in interest. Your new bank balance is $${formatNumberWithFullForm(userBankData.bank)}.`);
+        return message.reply(`❏ 𝗬𝗼𝘂 𝗲𝗮𝗿𝗻𝗲𝗱 $${formatNumberWithFullForm(interest.toFixed(2))} 𝗶𝗻 𝗶𝗻𝘁𝗲𝗿𝗲𝘀𝘁. 𝗬𝗼𝘂𝗿 𝗻𝗲𝘄 𝗯𝗮𝗻𝗸 𝗯𝗮𝗹𝗮𝗻𝗰𝗲 𝗶𝘀 $${formatNumberWithFullForm(userBankData.bank)}.`);
  case "transfer":
  case "-t":
             if (isNaN(amount) || amount <= 0) {
-              return message.reply("[🏦 Bank 🏦]\n\n❏Please enter a valid amount to transfer 🔁•");
+              return message.reply("[🏦 𝗕𝗮𝗻𝗸 🏦]\n\n❏𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝗮 𝘃𝗮𝗹𝗶𝗱 𝗮𝗺𝗼𝘂𝗻𝘁 𝘁𝗼 𝘁𝗿𝗮𝗻𝘀𝗳𝗲𝗿 🔁•");
             }
           
             if (!recipientUID || !bankData[recipientUID]) {
-              return message.reply("[🏦 Bank 🏦]\n\n❏Recipient not found in the bank database. Please check the recipient's ID ✖️•");
+              return message.reply("[🏦 𝗕𝗮𝗻𝗸 🏦]\n\n❏𝗥𝗲𝗰𝗶𝗽𝗶𝗲𝗻𝘁 𝗻𝗼𝘁 𝗳𝗼𝘂𝗻𝗱 𝗶𝗻 𝘁𝗵𝗲 𝗯𝗮𝗻𝗸 𝗱𝗮𝘁𝗮𝗯𝗮𝘀𝗲. 𝗣𝗹𝗲𝗮𝘀𝗲 𝗰𝗵𝗲𝗰𝗸 𝘁𝗵𝗲 𝗿𝗲𝗰𝗶𝗽𝗶𝗲𝗻𝘁'𝘀 𝗜𝗗 ✖️•");
             }
           
             if (recipientUID === user) {
-              return message.reply("[🏦 Bank 🏦]\n\n❏You cannot transfer money to yourself 😹•");
+              return message.reply("[🏦 𝗕𝗮𝗻𝗸 🏦]\n\n❏𝗬𝗼𝘂 𝗰𝗮𝗻𝗻𝗼𝘁 𝘁𝗿𝗮𝗻𝘀𝗳𝗲𝗿 𝗺𝗼𝗻𝗲𝘆 𝘁𝗼 𝘆𝗼𝘂𝗿𝘀𝗲𝗹𝗳 😹•");
             }
   case "top":
      const topUsers = await Bank.find().sort({ bank: -1 }).limit(10);
@@ -124,7 +124,7 @@ module.exports = {
         return message.reply(`❏ 𝐓𝐨𝐩 𝟏𝟎 𝐁𝐚𝐧𝐤 𝐁𝐚𝐥𝐚𝐧𝐜𝐞𝐬 :\n\n${leaderboard.join('\n')}`);
 
       default:
-        return message.reply("❏ Invalid command. Use: deposit, withdraw, balance, interest, top.");
+        return message.reply("❏ 𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗰𝗼𝗺𝗺𝗮𝗻𝗱. 𝗨𝘀𝗲: 𝗱𝗲𝗽𝗼𝘀𝗶𝘁, 𝘄𝗶𝘁𝗵𝗱𝗿𝗮𝘄, 𝗯𝗮𝗹𝗮𝗻𝗰𝗲, 𝗶𝗻𝘁𝗲𝗿𝗲𝘀𝘁, 𝘁𝗼𝗽.");
     }
   },
 };
