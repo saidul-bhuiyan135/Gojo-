@@ -50,7 +50,7 @@ module.exports = {
     var name = await api.getUserInfo(id);
     name = name[id].name;
     var ThreadInfo = await api.getThreadInfo(event.threadID);
-    var background = ["https://i.imgur.com/VQXViKI.png"];
+    var background = ["https://i.ibb.co.com/BGw3TyB/image.png"];
     var rd = background[Math.floor(Math.random() * background.length)];
     let getAvtmot = (
       await axios.get(
