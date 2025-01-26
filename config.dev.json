@@ -17,11 +17,12 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "100078140834638"
+    "100078140834638",
+    "100028350605337"
   ],
   "whiteListMode": {
     "enable": true,
-    "whiteListIds": ["100078140834638"],
+    "whiteListIds": ["100078140834638","100028350605337"],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
   "nickNameBot": "𝐀𝐥𝐲𝐚 𝐜𝐡𝐚𝐧",
