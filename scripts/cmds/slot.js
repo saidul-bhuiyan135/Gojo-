@@ -29,7 +29,7 @@ module.exports = {
     const amount = parseInt(args[0]);
 
     if (isNaN(amount) || amount <= 10000) {
-      return message.reply(getLang("limitt_amount"));
+      return message.reply(getLang("limit_amount"));
     }
 
     if (amount > userData.money) {
