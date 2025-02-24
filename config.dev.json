@@ -17,17 +17,17 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "61566533590967",
-    "100092366766774",
-    "100078140834638"
+    "61555887493470",
+    "",
+    ""
   ],
   "whiteListMode": {
     "enable": false,
-    "whiteListIds": ["100078140834638","100028350605337"],
+    "whiteListIds": ["61555887493470",""],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
-  "nickNameBot": "HINATA >.<",
-  "prefix": "!",
+  "nickNameBot": "𝗚 𝗢 𝗝 𝗢 終 🍭",
+  "prefix": "/",
   "database": {
     "type": "mongodb",
     "uriMongodb": "mongodb+srv://risingabir1:amPSSuawHXmkSxKk@cluster0.bpdm4.mongodb.net/Maki-BOT?retryWrites=true&w=majority&appName=Cluster0",
