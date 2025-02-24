@@ -2,7 +2,7 @@ module.exports = {
   config: {
     name: "slot",
     version: "1.0",
-    author: "AB IR",
+    author: "SAIDUL",
     countDown: 10,
     shortDescription: {
       en: "Slot game",
@@ -15,7 +15,7 @@ module.exports = {
   langs: {
     en: {
       invalid_amount: "Enter a valid and positive amount to have a chance to win double.",
-      limit_amount : "Minimum bet amount is 10k",
+      limit_amount : "Minimum bet amount is 1k",
       not_enough_money: "Check your balance to ensure you have that amount.",
       spin_message: "Spinning...",
       win_message: "You won $%1, buddy!",
@@ -28,7 +28,7 @@ module.exports = {
     const userData = await usersData.get(senderID);
     const amount = parseInt(args[0]);
 
-    if (isNaN(amount) || amount <= 10000) {
+    if (isNaN(amount) || amount <= 1000) {
       return message.reply(getLang("limit_amount"));
     }
 
@@ -36,7 +36,7 @@ module.exports = {
       return message.reply(getLang("not_enough_money"));
     }
 
-    const slots = ["💚", "💛", "💙", "💛", "💚", "💙", "💙", "💛", "💚"];
+    const slots = ["🍭", "🧃", "💎", "💎", "⭐", "🍯", "🍯", "🫐", "🍎"];
     const slot1 = slots[Math.floor(Math.random() * slots.length)];
     const slot2 = slots[Math.floor(Math.random() * slots.length)];
     const slot3 = slots[Math.floor(Math.random() * slots.length)];
@@ -59,9 +59,9 @@ function calculateWinnings(slot1, slot2, slot3, betAmount) {
     return -betAmount;
   }
 
-  if (slot1 === "💚" && slot2 === "💚" && slot3 === "💚") {
+  if (slot1 === "🍒" && slot2 === "🍉" && slot3 === "🍒") {
     return betAmount * 5;
-  } else if (slot1 === "💛" && slot2 === "💛" && slot3 === "💛") {
+  } else if (slot1 === "🍋" && slot2 === "🍉" && slot3 === "🍉") {
     return betAmount * 4;
   } else if (slot1 === slot2 && slot2 === slot3 && slot1 === slot3) {
     return betAmount * 2;
@@ -73,8 +73,8 @@ function calculateWinnings(slot1, slot2, slot3, betAmount) {
 function getSpinResultMessage(slot1, slot2, slot3, winnings, getLang) {
   const slotsDisplay = `[ ${slot1} | ${slot2} | ${slot3} ]`;
   if (winnings > 0) {
-    if (slot1 === "💙" && slot2 === "💙" && slot3 === "💙") {
-      return getLang("jackpot_message", winnings, "💙") + ` ${slotsDisplay}`;
+    if (slot1 === "🍏" && slot2 === "🍊" && slot3 === "🍊") {
+      return getLang("jackpot_message", winnings, "🍹") + ` ${slotsDisplay}`;
     } else {
       return getLang("win_message", winnings) + ` ${slotsDisplay}`;
     }
