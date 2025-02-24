@@ -3,11 +3,6 @@ const axios = require("axios");
 const path = require("path");
 const { getPrefix } = global.utils;
 const { commands, aliases } = global.GoatBot;
-const fs = require("fs-extra");
-const axios = require("axios");
-const path = require("path");
-const { getPrefix } = global.utils;
-const { commands, aliases } = global.GoatBot;
 const doNotDelete = "[ 🪐| 𝙎𝘼𝙄𝘿𝙐𝙇 𝘼𝙄 ]"; // changing this wont change the goatbot V2 of list cmd it is just a decoyy
 
 module.exports = {
@@ -151,4 +146,4 @@ function roleTextToString(roleText) {
 		default:
 			return "Unknown role";
 	}
-          }
+		}
