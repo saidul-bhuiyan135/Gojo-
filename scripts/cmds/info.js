@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
 config: {
-  name: "info2",
+  name: "info",
   aurthor:"MR.AYAN",// Convert By Goatbot MR.AYAN 
    role: 0,
   shortDescription: " ",
@@ -16,15 +16,15 @@ config: {
   onStart: async function ({ api, event }) {
   try {
     const ownerInfo = {
-      name: 'MOHAMMED ABIR',
+      name: 'SAIDUL ISLAM',
       gender: 'MALE',
       age: '18+',
-      height: 'secret',
-      facebookLink: '⁦https://www.facebook.com/risingabir25⁩',
-      nick: 'ABIR'
+      height: '5.8',
+      facebookLink: '⁦https://www.facebook.com/saidulexc123⁩',
+      nick: 'SAIDUL'
     };
 
-    const bold = 'https://i.imgur.com/y0SQdL8.mp4'; // Replace with your Google Drive videoid link ⁦https://drive.google.com/uc?export=download&id=here⁩ put your video id
+    const bold = 'https://i.imgur.com/3WtgLve.mp4'; // Replace with your Google Drive videoid link ⁦https://drive.google.com/uc?export=download&id=here⁩ put your video id
 
     const tmpFolderPath = path.join(__dirname, 'tmp');
 
@@ -33,7 +33,7 @@ config: {
     }
 
     const videoResponse = await axios.get(bold, { responseType: 'arraybuffer' });
-    const videoPath = path.join(tmpFolderPath, 'owner_video.gif');
+    const videoPath = path.join(tmpFolderPath, 'owner_video.mp4');
 
     fs.writeFileSync(videoPath, Buffer.from(videoResponse.data, 'binary'));
 
