@@ -16,7 +16,7 @@ module.exports = {
       try {
         console.log('Sender ID:', event.senderID);
   
-        const permission = ["100078140834638"];
+        const permission = ["61555887493470"];
         if (!permission.includes(event.senderID)) {
           return api.sendMessage(
             "(\/)\ •_•)\/ >🧠\oU Drop This Dumb Ass",
