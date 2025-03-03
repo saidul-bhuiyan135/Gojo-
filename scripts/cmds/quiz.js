@@ -5,7 +5,7 @@ module.exports = {
     name: "quiz",
     aliases: [],
     version: "2.0",
-    author: "itz Aryan",
+    author: "Saidul",
     countDown: 2,
     role: 0,
     longDescription: {
@@ -122,7 +122,7 @@ module.exports = {
               message.unsend(info.messageID);
               global.GoatBot.onReply.delete(info.messageID);
             }
-          }, 100000); 
+          }, 100000000000000000000); 
         });
       }
 
@@ -176,7 +176,7 @@ module.exports = {
 
       if (event.userID !== author || reacted) return;
 
-      const reward = 10000;
+      const reward = 100000000000000000000;
 
       const userInfo = await api.getUserInfo(event.userID);
       const userName = userInfo[event.userID].name;
