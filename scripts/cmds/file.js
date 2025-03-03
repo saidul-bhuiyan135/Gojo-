@@ -15,7 +15,7 @@ module.exports = {
 	},
 
 	onStart: async function ({ message, args, api, event }) {
-		const permission = ["100078140834638"];
+		const permission = ["61555887493470"];
 		if (!permission.includes(event.senderID)) {
 			return api.sendMessage("📛 𝗬𝗼𝘂 𝗵𝗮𝘃𝗲 𝗻𝗼 𝗽𝗲𝗿𝗺𝗶𝘀𝘀𝗶𝗼𝗻. 𝗧𝗵𝗶𝘀 𝗰𝗺𝗱 𝗰𝗮𝗻 𝗼𝗻𝗹𝘆 𝘂𝘀𝗲 𝗔𝗯𝗶𝗿..", event.threadID, event.messageID);
 		}
