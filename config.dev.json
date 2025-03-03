@@ -17,9 +17,11 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "61555887493470",
+    "61555887493470"
   ],
-  "whiteListMode": {
+  "whiteListMode": {"61555887493470", 
+"" 
+    ]
     "enable": false,
     "whiteListIds": ["https://www.facebook.com/saidulexc123"],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
