@@ -1,7 +1,7 @@
 {
   "facebookAccount": {
-    "email": "saxxbayjid@gmail.com",
-    "password": "sexxbayjid#@11",
+    "email": "",
+    "password": "",
     "2FASecret": "",
     "i_user": "",
     "proxy": null,
@@ -17,15 +17,13 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "61555887493470", " uid",
-
+    "61555887493470",
+    
+    
   ],
- 
-    [
+  "whiteListMode": {
     "enable": false,
-    "whiteListIds": [ "61555887493470", "uid",
-"uid",
-],
+    "whiteListIds": ["61555887493470","61555887493470"],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
   "nickNameBot": "𝗦𝗔𝗜𝗗𝗨𝗟 [ / ] 🪐",
@@ -142,4 +140,4 @@
     "autoReconnect": false,
     "notes": "Document here: https://github.com/ntkhang03/fb-chat-api/blob/master/DOCS.md#apisetoptionsoptions "
   }
-  }
+}
