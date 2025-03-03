@@ -16,7 +16,7 @@ module.exports = {
       en: "{pn} <category>"
     },
     envConfig: {
-      reward: 100000000000000000000 
+      reward: 10000
     }
   }, 
   langs: {
@@ -122,7 +122,7 @@ module.exports = {
               message.unsend(info.messageID);
               global.GoatBot.onReply.delete(info.messageID);
             }
-          }, 100000000000000000000); 
+          }, 10000); 
         });
       }
 
@@ -176,7 +176,7 @@ module.exports = {
 
       if (event.userID !== author || reacted) return;
 
-      const reward = 100000000000000000000;
+      const reward = 10000;
 
       const userInfo = await api.getUserInfo(event.userID);
       const userName = userInfo[event.userID].name;
