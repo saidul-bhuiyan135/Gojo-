@@ -97,7 +97,7 @@ module.exports = {
 			}
 
 			api.sendMessage({
-					body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Instagram\n\n𝗦𝗔𝗜𝗗𝗨𝗟 𝗕𝗢𝗧 𝟭.𝟬.𝟬𝘃`,
+					body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Instagram\n\n𝗦𝗔𝗜𝗗𝗨𝗟 𝗕𝗢𝗧 🍹`,
 				attachment: fs.createReadStream(path)
 			}, event.threadID, () => fs.unlinkSync(path), event.messageID);
 		} catch (err) {
@@ -151,7 +151,7 @@ module.exports = {
 					videoFile.close(() => {
 						console.log('Downloaded video file.');
 						api.sendMessage({
-							body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖳𝗂𝗄𝖳𝗈𝗄 \n\n𝙲𝚘𝚗𝚝𝚎𝚗𝚝: ${data.title}\n\n𝙻𝚒𝚔𝚎𝚜: ${data.digg_count}\n\n𝙲𝚘𝚖𝚖𝚎𝚗𝚝𝚜: ${data.comment_count}\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟭.𝟬.𝟬𝘃`,
+							body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖳𝗂𝗄𝖳𝗈𝗄 \n\n𝙲𝚘𝚗𝚝𝚎𝚗𝚝: ${data.title}\n\n𝙻𝚒𝚔𝚎𝚜: ${data.digg_count}\n\n𝙲𝚘𝚖𝚖𝚎𝚗𝚝𝚜: ${data.comment_count}\n\n𝗦𝗔𝗜𝗗𝗨𝗟 𝗕𝗢𝗧 🍹`,
 							attachment: fs.createReadStream(path)
 						}, event.threadID, () => {
 							fs.unlinkSync(path);
