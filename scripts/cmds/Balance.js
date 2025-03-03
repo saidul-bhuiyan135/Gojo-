@@ -49,7 +49,7 @@ module.exports = {
         const formattedMoney = this.formatMoney(money);
 
         if (isSelfCheck) {
-            return message.reply(`💰 𝑌𝑜𝑢𝑟 𝐵𝑎𝑙𝑎𝑛𝑐𝑒 𝑖𝑠 ${formattedMoney} $ !? 🤑`);
+            return message.reply(`💰 𝑌𝑜𝑢𝑟 𝐵𝑎𝑙𝑎𝑛𝑐𝑒 𝑖𝑠 ${formattedMoney} $  🤑`);
         } 
         else {
             return message.reply(`💳 𝑩𝑨𝑳𝑨𝑵𝑪𝑬 𝑰𝑵𝑭𝑶𝑹𝑴𝑨𝑻𝑰𝑶𝑵 💳\n💵💰 ${userData?.name || "𝑈𝑠𝑒𝑟"} 𝐻𝑎𝑠 ${formattedMoney} $ !? 💸\n💫 𝐻𝑎𝑣𝑒 𝑎 𝑔𝑜𝑜𝑑 𝑑𝑎𝑦 💫`);
