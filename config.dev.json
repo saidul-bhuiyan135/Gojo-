@@ -26,7 +26,7 @@
     "whiteListIds": ["61555887493470",""],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
-  "nickNameBot": "𝗚 𝗢 𝗝 𝗢 終 🍭",
+  "nickNameBot": "𝗠𝗜𝗨𝗞𝗜 [ / ] 🍭",
   "prefix": "/",
   "database": {
     "type": "mongodb",
