@@ -18,7 +18,7 @@ config: {
     const ownerInfo = {
       name: 'SAIDUL ISLAM',
       gender: 'MALE',
-      age: '18+',
+      age: '...',
       height: '5.8',
       facebookLink: '⁦https://www.facebook.com/saidulexc123⁩',
       nick: 'SAIDUL'
