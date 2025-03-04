@@ -1,56 +1,41 @@
 module.exports = {
-  config: {
-    name: "uptime",
-    aliases: ["upt", "up"],
-    version: "1.0",
-    author: "BaYjid", // Author is fixed as "BaYjid"
-    role: 0,
-    shortDescription: {
-      en: "Displays the total number of users of the bot and check uptime."
-    },
-    longDescription: {
-      en: "Displays the total number of users who have interacted with the bot and check uptime."
-    },
-    category: "RUNNING-TIME",
-    guide: {
-      en: "Type {pn}"
-    }
-  },
-  onStart: async function ({ api, event, usersData, threadsData }) {
-    try {
-      const allUsers = await usersData.getAll();
-      const allThreads = await threadsData.getAll();
-      const uptime = process.uptime();
-      const memoryUsage = (process.memoryUsage().rss / 1024 / 1024).toFixed(2);  // Memory usage in MB
-      const cpuLoad = (process.cpuUsage().user / 1000).toFixed(2); // CPU load in milliseconds
+	config: {
+		name: "uptime",
+		aliases: ["up,upt"],
+		role: 0,
+		shortDescription: {
+			en: "Show server uptime",
+			tl: "Ipakita ang uptime ng server",
+		},
+		longDescription: {
+			en: "Shows the duration for which the server has been running",
+			tl: "Ipapakita ang tagal na gumagana ang server",
+		},
+		category: "goatBot",
+		guide: {
+			en: "{p}uptime",
+			tl: "{p}uptime",
+		},
+	},
 
-      const hours = Math.floor(uptime / 3600);
-      const minutes = Math.floor((uptime % 3600) / 60);
-      const seconds = Math.floor(uptime % 60);
-      
-      const uptimeString = `
-────────────────────
-⏰  𝗛𝗢𝗨𝗥𝗦 : ${hours} 𝗛𝗥
-⌚ 𝗠𝗜𝗡𝗨𝗧𝗘𝗦 : ${minutes} 𝗠𝗜𝗡
-⏳  𝗦𝗘𝗖𝗢𝗡𝗗𝗦 : ${seconds} 𝗦𝗘𝗖
-🧠 𝗠𝗘𝗠𝗢𝗥𝗬 𝗨𝗦𝗔𝗚𝗘 : ${memoryUsage} MB
-💻 𝗖𝗣𝗨 𝗟𝗢𝗔𝗗 : ${cpuLoad} ms
-────────────────────`;
+	onStart: async function ({ api, message, threadsData }) {
+		const os = require("os");
+		const uptime = os.uptime();
 
-      api.sendMessage(`
-★─────────────────────────★
-➤ 𝐔𝐏𝐓𝐈𝐌𝐄 ✅
-╭‣ 𝐀𝐝𝐦𝐢𝐧 👑
-╰‣ 𝐒𝐚𝐢𝐝𝐮𝐥 くめ
-★─────────────────────────★
-${uptimeString}
-👥 𝐓𝐨𝐭𝐚𝐥 𝗨𝘀𝗲𝗿𝘀 : ${allUsers.length}
-🗂️ 𝐓𝐨𝐭𝐚𝐥 𝗧𝗵𝗿𝗲𝗮𝗱𝘀 : ${allThreads.length}
-★─────────────────────────★
-`, event.threadID);
-    } catch (error) {
-      console.error(error);
-      api.sendMessage("❌ **Error**: Something went wrong while fetching the data.", event.threadID);
-    }
-  }
+		const days = Math.floor(uptime / (3600 * 24));
+		const hours = Math.floor((uptime % (3600 * 24)) / 3600);
+		const mins = Math.floor((uptime % 3600) / 60);
+		const seconds = Math.floor(uptime % 60);
+
+		const system = `OS: ${os.platform()} ${os.release()}`;
+		const cores = `Cores: ${os.cpus().length}`;
+		const arch = `Architecture: ${os.arch()}`;
+		const totalMemory = `Total Memory: ${Math.round(os.totalmem() / (1024 * 1024 * 1024))} GB`;
+		const freeMemory = `Free Memory: ${Math.round(os.freemem() / (1024 * 1024 * 1024))} GB`;
+		const uptimeString = `Uptime: ${days} days, ${hours} hours, ${mins} minutes, and ${seconds} seconds`;
+
+		const response = `🕒 ${uptimeString}\n📡 ${system}\n🛡 ${cores}\n⚔ No AI Status\n📈 Total Users: ${threadsData.size}\n📉 Total Threads: ${threadsData.size}\n⚖ AI Usage: 0.0\n📊 RAM Usage: ${Math.round(process.memoryUsage().rss / (1024 * 1024))} MB\n💰 Total(RAM): ${Math.round(os.totalmem() / (1024 * 1024 * 1024))} GB\n💸 Current(RAM): ${Math.round(os.freemem() / (1024 * 1024 * 1024))} GB\n🛫 Ping: 15 ms\n🕰 Uptime(Seconds): ${Math.floor(process.uptime())}`;
+
+		message.reply(response);
+	},
 };
