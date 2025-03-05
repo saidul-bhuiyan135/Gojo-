@@ -80,7 +80,7 @@ async function onStart({ api, event }) {
 
 module.exports = {
 	config: {
-		name: 'uptime',
+		name: 'uptime2',
 		version: '2.1.0',
 		author: "Cliff", // Do not change credits
 		countDown: 5,
@@ -91,7 +91,7 @@ module.exports = {
 		},
 		category: 'system',
 		guide: {
-			en: '{p}uptime'
+			en: '{p}uptime2'
 		}
 	},
 	byte2mb,
