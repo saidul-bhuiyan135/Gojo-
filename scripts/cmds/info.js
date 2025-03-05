@@ -1,64 +1,69 @@
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
-
-module.exports = {
-config: {
+module.exports.config = {
   name: "info",
-  aurthor:"MR.AYAN",// Convert By Goatbot MR.AYAN 
-   role: 0,
-  shortDescription: " ",
-  longDescription: "",
-  category: "admin",
-  guide: "{pn}"
-},
-
-  onStart: async function ({ api, event }) {
-  try {
-    const ownerInfo = {
-      name: 'SAIDUL ISLAM',
-      gender: 'MALE',
-      age: '...',
-      height: '5.8',
-      facebookLink: '⁦https://www.facebook.com/saidulexc123⁩',
-      nick: 'SAIDUL'
-    };
-
-    const bold = 'https://i.imgur.com/3WtgLve.mp4'; // Replace with your Google Drive videoid link ⁦https://drive.google.com/uc?export=download&id=here⁩ put your video id
-
-    const tmpFolderPath = path.join(__dirname, 'tmp');
-
-    if (!fs.existsSync(tmpFolderPath)) {
-      fs.mkdirSync(tmpFolderPath);
-    }
-
-    const videoResponse = await axios.get(bold, { responseType: 'arraybuffer' });
-    const videoPath = path.join(tmpFolderPath, 'owner_video.mp4');
-
-    fs.writeFileSync(videoPath, Buffer.from(videoResponse.data, 'binary'));
-
-    const response = `
-Owner Information:🧾
-Name: ${ownerInfo.name}
-Gender: ${ownerInfo.gender}
-Age: ${ownerInfo.age}
-Height: ${ownerInfo.height}
-Facebook: ${ownerInfo.facebookLink}
-Nick: ${ownerInfo.nick}
-`;
-
-
-    await api.sendMessage({
-      body: response,
-      attachment: fs.createReadStream(videoPath)
-    }, event.threadID, event.messageID);
-
-    if (event.body.toLowerCase().includes('ownerinfo')) {
-      api.setMessageReaction('✅', event.messageID, (err) => {}, true);
-    }
-  } catch (error) {
-    console.error('Error in ownerinfo command:', error);
-    return api.sendMessage('An error occurred while processing the command.', event.threadID);
-  }
-},
+  version: "1.0.0",
+  permission: 0,
+  credits: "saidul",
+  prefix: true,
+  description: "search results on google",
+  category: "without prefix",
+  usages: "google [text]",
+  cooldowns: 5,
+  dependencies: 
+{
+  "request":"",
+  "fs-extra":"",
+  "axios":""
+}
 };
+module.exports.run = async function({ api,event,args,client,Users,Threads,__GLOBAL,Currencies }) {
+const axios = global.nodemodule["axios"];
+const request = global.nodemodule["request"];
+const fs = global.nodemodule["fs-extra"];
+const time = process.uptime(),
+    hours = Math.floor(time / (60 * 60)),
+    minutes = Math.floor((time % (60 * 60)) / 60),
+    seconds = Math.floor(time % 60);
+const moment = require("moment-timezone");
+var juswa = moment.tz("Asia/Manila").format("『D/MM/YYYY』 【hh:mm:ss】");
+var link = ["https://i.imgur.com/MkT10Ai.mp4 ", 
+
+             
+
+            
+
+"",
+
+            ""];
+
+var callback = () => api.sendMessage({body:`𝙸𝙽𝙵𝙾 𝙰𝙽𝙳 𝙱𝙾𝚃 𝙸𝙽𝙵𝙾𝚁𝙼𝙰𝚃𝙸𝙾𝙽
+________________________________________
+
+𝙱𝙾𝚃 𝙽𝙰𝙼𝙴 : ${global.config.BOTNAME}
+
+𝙱𝙾𝚃 𝙰𝙳𝙼𝙸𝙽 :『 𝙰𝚁𝙸𝚈𝙰𝙽 𝚂𝙰𝙸𝙳𝚄𝙻 』
+
+𝙰𝙳𝙳𝚁𝙴𝚂𝚂 : 𝙲𝙾𝙼𝙸𝙻𝙻𝙰 
+
+_____________𝙲𝙾𝙽𝚃𝙰𝙲𝚃_____________
+
+𝙵𝙰𝙲𝙴𝙱𝙾𝙾𝙺 𝙸𝙳 : https://www.facebook.com/saidulexc123
+
+𝙵𝙰𝙲𝙴𝙱𝙾𝙾𝚔 𝙿𝙰𝙶𝙴: 𝙽𝙾 
+
+𝙱𝙾𝚃 𝙿𝚁𝙴𝙵𝙸𝚇 : ${global.config.PREFIX}
+
+𝙱𝙾𝚃 𝙾𝚆𝙽𝙴𝚁 : 𝚂𝙰𝙸𝙳𝚄𝙻
+
+𝙾𝚃𝙷𝙴𝚁 𝙸𝙽𝙵𝙾𝙼𝙰𝚃𝙸𝙾𝙽____________________
+
+𝚃𝚈𝙿𝙴 /𝚊𝚍𝚖𝚒𝚗
+
+➟ 𝚄𝙿𝚃𝙸𝙼𝙴
+
+𝚃𝙾𝙳𝙰𝚈 𝙸𝚂 𝚃𝙸𝙼𝙴 : ${juswa} 
+
+𝙱𝙾𝚃 𝙸𝚂 𝚁𝚄𝙽𝙽𝙸𝙽𝙶 ${hours}:${minutes}:${seconds}.
+
+𝚃𝙷𝙰𝙽𝙺𝚂 𝙵𝙾𝚁 𝚄𝚂𝙸𝙽𝙶 ${global.config.BOTNAME} 『』`,attachment: fs.createReadStream(__dirname + "/cache/juswa.jpeg")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/juswa.jpeg")); 
+      return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/juswa.jpeg")).on("close",() => callback());
+   };
