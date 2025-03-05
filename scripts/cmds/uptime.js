@@ -22,7 +22,7 @@ module.exports = {
 		const minutes = Math.floor((uptime / 60) % 60);
 		const hours = Math.floor((uptime / (60 * 60)) % 24);
 		const days = Math.floor(uptime / (60 * 60 * 24));
-		const uptimeString = `${hours} 🕰️ 𝗛𝗢𝗨𝗥'𝗦 ${minutes} ⏰ 𝗠𝗜𝗡𝗨𝗧𝗘'𝗦 ${seconds}⏳ 𝗦𝗘𝗖𝗢𝗡𝗗`;
-		api.sendMessage(`hello user, the bot has been running for ${uptimeString}.`, event.threadID);
+		const uptimeString = `${hours}  𝗛𝗢𝗨𝗥'𝗦 ${minutes}  𝗠𝗜𝗡𝗨𝗧𝗘'𝗦 ${seconds} 𝗦𝗘𝗖𝗢𝗡𝗗 `;
+		api.sendMessage(`𝗛𝗘𝗟𝗟𝗢 𝗨𝗦𝗘𝗥, 𝗧𝗛𝗘 𝗕𝗢𝗧 𝗛𝗔𝗦 𝗕𝗘𝗘𝗡 𝗥𝗨𝗡𝗡𝗜𝗡𝗚 𝗙𝗢𝗥 ${uptimeString}.`, event.threadID);
 	}
 };
