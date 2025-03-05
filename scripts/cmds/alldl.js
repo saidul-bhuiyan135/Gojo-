@@ -1,72 +1,132 @@
-const axios = require("axios");
 const fs = require("fs-extra");
-const baseApiUrl = async () => {
-  const base = await axios.get(
-    `https://raw.githubusercontent.com/Blankid018/D1PT0/main/baseApiUrl.json`,
-  );
-  return base.data.api;
-};
+const axios = require("axios");
+const path = require("path");
+const { getStreamFromURL } = global.utils;
+
+function loadAutodlStates() {
+  try { return JSON.parse(fs.readFileSync("alldl.json", "utf8")); }
+  catch { return {}; }
+}
+
+function saveAutodlStates(states) {
+  fs.writeFileSync("alldl.json", JSON.stringify(states, null, 2));
+}
+
+let autodlStates = loadAutodlStates();
 
 module.exports = {
+  threadStates: {},
   config: {
-    name: "alldl",
-    version: "1.0.5",
-    author: "Dipto",
-    countDown: 2,
+    name: 'alldl',
+    version: '2.0',
+    author: 'Nyx',
     role: 0,
-    description: {
-      en: "𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝘃𝗶𝗱𝗲𝗼 𝗳𝗿𝗼𝗺 𝘁𝗶𝗸𝘁𝗼𝗸, 𝗳𝗮𝗰𝗲𝗯𝗼𝗼𝗸, 𝗜𝗻𝘀𝘁𝗮𝗴𝗿𝗮𝗺, 𝗬𝗼𝘂𝗧𝘂𝗯𝗲, 𝗮𝗻𝗱 𝗺𝗼𝗿𝗲",
-    },
-    category: "𝗠𝗘𝗗𝗜𝗔",
-    guide: {
-      en: "[video_link]",
-    },
+    category: 'downloader',
+    guide: { en: '{p}{n}' }
   },
-  onStart: async function ({ api, args, event }) {
-    const dipto = event.messageReply?.body || args[0];
-    if (!dipto) {
-      api.setMessageReaction("❌", event.messageID, (err) => {}, true);
+  
+  onStart: async function({ api, event }) {
+    const threadID = event.threadID;
+    autodlStates[threadID] = autodlStates[threadID] || 'on';
+    saveAutodlStates(autodlStates);
+    
+    const command = event.body.toLowerCase();
+    if (command.includes('alldl end')) {
+      autodlStates[threadID] = 'off';
+      api.setMessageReaction("✅", event.messageID, () => {}, true);
+    } else if (command.includes('alldl start')) {
+      autodlStates[threadID] = 'on';
+      api.setMessageReaction("✅", event.messageID, () => {}, true);
     }
+    saveAutodlStates(autodlStates);
+  },
+  
+  onChat: async function({ api, event }) {
+    const threadID = event.threadID;
+    if (autodlStates[threadID] === 'on' && this.checkLink(event.body)) {
+      api.setMessageReaction("⌛", event.messageID, () => {}, true);
+      this.downLoad(this.checkLink(event.body).url, api, event);
+    }
+  },
+  
+  downLoad: function(url, api, event) {
+    const platformHandlers = {
+      'instagram.com': this.all,
+      'facebook.com': this.all,
+      'fb.watch': this.all,
+      'tiktok.com': this.all,
+      'x.com': this.downloadTwitter,
+      'pin.it': this.all,
+      'youtube.com': this.downloadYouTube,
+      'youtu.be': this.downloadYouTube
+    };
+    const platform = Object.keys(platformHandlers).find(key => url.includes(key)) || 'default';
+    platformHandlers[platform].call(this, url, api, event);
+  },
+  
+  all: async function(url, api, event) {
     try {
-      api.setMessageReaction("🪄", event.messageID, (err) => {}, true);
-      const { data } = await axios.get(`${await baseApiUrl()}/alldl?url=${encodeURIComponent(dipto)}`);
-      const filePath = __dirname + `/cache/vid.mp4`;
-      if(!fs.existsSync(filePath)){
-        fs.mkdir(__dirname + '/cache');
-      }
-      const vid = (
-        await axios.get(data.result, { responseType: "arraybuffer" })
-      ).data;
-      fs.writeFileSync(filePath, Buffer.from(vid, "utf-8"));
-      const url = await global.utils.shortenURL(data.result);
-      api.setMessageReaction("✅", event.messageID, (err) => {}, true);
-      api.sendMessage({
-          body: `${data.cp || null}\nLink = ${url || null}`,
-          attachment: fs.createReadStream(filePath),
-        },
-        event.threadID,
-        () => fs.unlinkSync(filePath),
-        event.messageID
-      );
-      if (dipto.startsWith("https://i.imgur.com")) {
-        const dipto3 = dipto.substring(dipto.lastIndexOf("."));
-        const response = await axios.get(dipto, {
-          responseType: "arraybuffer",
-        });
-        const filename = __dirname + `/cache/dipto${dipto3}`;
-        fs.writeFileSync(filename, Buffer.from(response.data, "binary"));
-        api.sendMessage({
-            body: `✅ | Downloaded from link`,
-            attachment: fs.createReadStream(filename),
-          },
-          event.threadID,
-          () => fs.unlinkSync(filename),
-          event.messageID,
-        );
-      }
-    } catch (error) {
-      api.setMessageReaction("❎", event.messageID, (err) => {}, true);
-      api.sendMessage(error.message, event.threadID, event.messageID);
+      const response = await axios.get(`https://mostakim.onrender.com/m/alldl?url=${url}`);
+      await this.streamAndSend(response.data.videos[0].url, api, event);
+    } catch (err) {
+      this.handleError(api, event, err);
     }
   },
+  
+  downloadYouTube: async function(url, api, event) {
+    try {
+      const response = await axios.get(`https://mostakim.onrender.com/m/ytDl?url=${url}`);
+      const videoUrl = response.data.url;
+      const tempFilePath = path.join(__dirname, `/cache/yt_${Date.now()}.mp4`);
+      
+      const videoResponse = await axios({ url: videoUrl, method: 'GET', responseType: 'stream' });
+      const writer = fs.createWriteStream(tempFilePath);
+      videoResponse.data.pipe(writer);
+      
+      await new Promise((resolve, reject) => {
+        writer.on('finish', resolve);
+        writer.on('error', reject);
+      });
+      
+      api.sendMessage({
+        body: "Here's Your Download Video 🎥",
+        attachment: fs.createReadStream(tempFilePath)
+      }, event.threadID, event.messageID);
+      
+      fs.unlink(tempFilePath, (err) => { if (err) console.error(err) });
+    } catch (err) {
+      this.handleError(api, event, err);
+    }
+  },
+  
+  streamAndSend: async function(url, api, event) {
+    try {
+      api.sendMessage({
+        body: "Here's Your Download Video 🎥",
+        attachment: await getStreamFromURL(url)
+      }, event.threadID, event.messageID);
+    } catch (err) {
+      this.handleError(api, event, err);
+    }
+  },
+  
+  handleError: function(api, event, err) {
+    console.error(err);
+    api.setMessageReaction("❎", event.messageID, () => {}, true);
+    api.sendMessage(`Error: ${err.message}`, event.threadID);
+  },
+  
+  checkLink: function(text) {
+    const patterns = {
+      instagram: /https:\/\/www\.instagram\.com\/\S+/,
+      facebook: /(https?:\/\/.*facebook\.com\/.*|https?:\/\/fb\.watch\/\S+)/,
+      tiktok: /https?:\/\/(www\.|vt\.)?tiktok\.com\/\S+/,
+      pinterest: /https?:\/\/pin\.it\/\S+/,
+      youtube: /(https?:\/\/.*youtube\.com\/.*|https?:\/\/youtu\.be\/\S+)/
+    };
+    for (const [platform, regex] of Object.entries(patterns)) {
+      if (regex.test(text)) return { url: text.match(regex)[0], platform };
+    }
+    return null;
+  }
 };
