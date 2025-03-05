@@ -56,7 +56,7 @@ function getUptime(uptime) {
 	const months = Math.floor(days / 30);
 		const remainingDays = days % 30;
 
-	return `uptime: ${months}🗓️ 𝗠𝗢𝗡𝗧𝗛(s}, ${remainingDays}🕰️ 𝗗𝗔𝗬'𝗦(s), ${hours}⏰ 𝗛𝗢𝗨𝗥'𝗦(s), ${mins}🕘 𝗠𝗜𝗡𝗨𝗧𝗘'𝗦(s), 𝗔𝗡𝗗 ${seconds}🕘 𝗦𝗘𝗖𝗢𝗡𝗗'𝗦(s)`;
+	return `𝗨𝗣𝗧𝗜𝗠𝗘: ${months} 𝗠𝗢𝗡𝗧𝗛(s}, ${remainingDays} 𝗗𝗔𝗬(s), ${hours} 𝗛𝗢𝗨𝗥(s), ${mins} 𝗠𝗜𝗡𝗨𝗧𝗘(s), 𝗔𝗡𝗗 ${seconds} 𝗦𝗘𝗖𝗢𝗡𝗗(s)`;
 }
 
 async function onStart({ api, event }) {
