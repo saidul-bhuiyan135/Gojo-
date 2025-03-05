@@ -11,7 +11,7 @@ module.exports = {
   config: {
     name: "alldl",
     version: "1.0.5",
-    author: "saidul",
+    author: "Dipto",
     countDown: 2,
     role: 0,
     description: {
@@ -28,7 +28,7 @@ module.exports = {
       api.setMessageReaction("❌", event.messageID, (err) => {}, true);
     }
     try {
-      api.setMessageReaction("⏳", event.messageID, (err) => {}, true);
+      api.setMessageReaction("🪄", event.messageID, (err) => {}, true);
       const { data } = await axios.get(`${await baseApiUrl()}/alldl?url=${encodeURIComponent(dipto)}`);
       const filePath = __dirname + `/cache/vid.mp4`;
       if(!fs.existsSync(filePath)){
