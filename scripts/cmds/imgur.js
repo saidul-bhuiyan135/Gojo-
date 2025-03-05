@@ -1,43 +1,23 @@
-const axios = require("axios");
-const baseApiUrl = async () => {
-  const base = await axios.get(
-    `https://raw.githubusercontent.com/Blankid018/D1PT0/main/baseApiUrl.json`,
-  );
-  return base.data.api;
+module.exports.config = {
+    name: "imgur",
+    version: "1.0.0",
+    hasPermssion: 0,
+    credits: "Makoto Ei",
+    description: "Up ảnh lên imgur",
+    commandCategory: "Tiện ích",
+    usages: "[reply]",
+    cooldowns: 5,
+    dependencies: {
+  "axios": "",}
 };
 
-(module.exports.config = {
-  name: "imgur",
-  version: "6.9",
-  author: "dipto",
-  countDown: 5,
-  role: 0,
-  category: "media",
-  description: "convert image/video into Imgur link",
-  category: "tools",
-  usages: "reply [image, video]",
-}),
-  (module.exports.onStart = async function ({ api, event }) {
-    const dip = event.messageReply?.attachments[0]?.url;
-    if (!dip) {
-      return api.sendMessage(
-        "Please reply to an image or video.",
-        event.threadID,
-        event.messageID,
-      );
-    }
-    try {
-      const res = await axios.get(
-        `${await baseApiUrl()}/imgur?url=${encodeURIComponent(dip)}`,
-      );
-      const dipto = res.data.data;
-      api.sendMessage(dipto, event.threadID, event.messageID);
-    } catch (error) {
-      console.error(error);
-      return api.sendMessage(
-        "Failed to convert image or video into link.",
-        event.threadID,
-        event.messageID,
-      );
-    }
-  });
+module.exports.run = async ({ api, event }) => {
+const axios = global.nodemodule['axios'];  
+var linkanh = event.messageReply.attachments[0].url || args.join(" ");
+    if(!linkanh) return api.sendMessage('Vui lòng phản hồi hoặc nhập link 1 hình ảnh', event.threadID, event.messageID)
+const res = await axios.get(`https://apiuwuapi.ducdz999.repl.co/imgurupload?link=${encodeURIComponent(linkanh)}`);    
+var img = res.data.uploaded.image;
+var status = res.data.uploaded.status;
+    return api.sendMessage(`===「 𝗧𝗢𝗢𝗟 𝗜𝗠𝗚𝗨𝗥 」===\n━━━━━━━━━━━━━\n𝗧𝗶̀𝗻𝗵 𝘁𝗿𝗮̣𝗻𝗴: ${status}\n𝗟𝗶𝗻𝗸: ${img}`, event.threadID, event.messageID);
+    
+}
