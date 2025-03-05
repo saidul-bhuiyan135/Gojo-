@@ -1,32 +1,50 @@
-const axios = require('axios');
-const baseApiUrl = async () => {
-  const base = await axios.get(
-    `https://raw.githubusercontent.com/Blankid018/D1PT0/main/baseApiUrl.json`,
-  );
-  return base.data.api;
-};
-module.exports.config ={
+const { existsSync, mkdirSync } = require("fs");
+const axios = require("axios");
+const tinyurl = require('tinyurl');
+
+module.exports = {
+  config: {
     name: "prompt",
-    version: "6.9",
-    author: "dipto",
+    aliases: [],
+    version: "1.0",
+    author: "Vex_Kshitiz",
     countDown: 5,
     role: 0,
-    category: "media",
-    description: " image to prompt",
-    category: "tools",
-    usages: "reply [image]"
+    shortDescription: "Generate prompt for an image",
+    longDescription: "generate prompt for an image",
+    category: "image",
+    guide: {
+      en: "{p}prompt (reply to image)"
+    }
   },
 
-module.exports.onStart = async ({ api, event,args }) =>{
-    const dip = event.messageReply?.attachments[0]?.url || args.join(' ');
-    if (!dip) {
-      return api.sendMessage('Please reply to an image.', event.threadID, event.messageID);
+  onStart: async function ({ message, event, api }) {
+    api.setMessageReaction("🕐", event.messageID, (err) => {}, true);
+    const { type, messageReply } = event;
+    const { attachments, threadID } = messageReply || {};
+
+    if (type === "message_reply" && attachments) {
+      const [attachment] = attachments;
+      const { url, type: attachmentType } = attachment || {};
+
+      if (!attachment || attachmentType !== "photo") {
+        return message.reply("Reply to an image.");
+      }
+
+      try {
+        const tinyUrl = await tinyurl.shorten(url);
+        const apiUrl = `https://prompt-gen-eight.vercel.app/kshitiz?url=${encodeURIComponent(tinyUrl)}`;
+        const response = await axios.get(apiUrl);
+
+        const { prompt } = response.data;
+
+        message.reply(prompt, threadID);
+      } catch (error) {
+        console.error(error);
+        message.reply("❌ An error occurred while generating the prompt.");
+      }
+    } else {
+      message.reply("Please reply to an image.");
     }
-    try {
-      const prom = (await axios.get(`${await baseApiUrl()}/prompt?url=${encodeURIComponent(dip)}`)).data.data[0].response;
-         api.sendMessage(prom, event.threadID, event.messageID);
-    } catch (error) {
-      console.error(error);
-      return api.sendMessage('Failed to convert image into text.', event.threadID, event.messageID);
-    }
-  };
+  }
+};
