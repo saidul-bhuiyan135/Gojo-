@@ -16,7 +16,7 @@ config: {
   onStart: async function ({ api, event }) {
   try {
     const ownerInfo = {
-      𝙽𝙰𝙼𝙴 :'𝚂𝙰𝙸𝙳𝚄𝙻',
+      𝙽𝙰𝙼𝙴 :'𝙰𝚁𝙸𝚈𝙰𝙽 𝚂𝙰𝙸𝙳𝚄𝙻',
       𝙶𝙴𝙽𝙳𝙴𝚁 :'𝙼𝙰𝙻𝙴',
       𝙰𝙶𝙴 :'𝚄𝙽𝙺𝙽𝙾𝚆𝙽',
       𝙷𝙴𝙸𝙶𝙷𝚃 :'𝚄𝙽𝙺𝙽𝙾𝚆𝙽',
@@ -39,12 +39,12 @@ config: {
 
     const response = `
 𝙾𝚆𝙽𝙴𝚁 𝙸𝙽𝙵𝙾𝚁𝙼𝙰𝚃𝙸𝙾𝙽:🧾
-𝙽𝙰𝙼𝙴 :${ownerInfo.name}
-𝙶𝙴𝙽𝙳𝙴𝚁 :${ownerInfo.gender}
-𝙰𝙶𝙴 :${ownerInfo.age}
-𝙷𝙴𝙸𝙶𝙷𝚃 :${ownerInfo.height}
-𝙵𝙰𝙲𝙴𝙱𝙾𝙾𝙺 :${ownerInfo.facebookLink}
-𝙽𝙸𝙲𝙺:${ownerInfo.nick}
+𝙽𝙰𝙼𝙴 :${ownerInfo.𝙽𝙰𝙼𝙴}
+𝙶𝙴𝙽𝙳𝙴𝚁 :${ownerInfo.𝙶𝙴𝙽𝙳𝙴𝚁}
+𝙰𝙶𝙴 :${ownerInfo.𝙰𝙶𝙴}
+𝙷𝙴𝙸𝙶𝙷𝚃 :${ownerInfo.𝙷𝙴𝙸𝙶𝙷𝚃}
+𝙵𝙰𝙲𝙴𝙱𝙾𝙾𝙺 :${ownerInfo.𝙵𝙰𝙲𝙴𝙱𝙾𝙾𝙺𝙻𝙸𝙽𝙺}
+𝙽𝙸𝙲𝙺:${ownerInfo.𝙽𝙸𝙲𝙺}
 `;
 
 
