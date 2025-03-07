@@ -7,7 +7,7 @@ const doNotDelete = "[ 🪐| 𝙎𝘼𝙄𝘿𝙐𝙇 𝘼𝙄 ]"; // changing t
 
 module.exports = {
 	config: {
-		name: "help 2",
+		name: "help2",
 		version: "1.17",
 		author: "NTKhang", // original author Kshitiz 
 		countDown: 5,
