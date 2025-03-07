@@ -20,7 +20,7 @@ module.exports = {
 		},
 		category: "info",
 		guide: {
-			en: "{pn} / help cmdName ",
+			en: "{pn} / help2 cmdName ",
 		},
 		priority: 1,
 	},
