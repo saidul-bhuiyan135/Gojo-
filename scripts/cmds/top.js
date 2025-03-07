@@ -1,7 +1,7 @@
-.cmd install top.js module.exports = {
+module.exports = {
   config: {
     name: "top",
-    aliases: ["tp"],
+    aliases: ["top"],
     version: "1.0",
     author: "saidul",
     role: 0,
